@@ -1,0 +1,16 @@
+<resources>
+<!--    Main Activity & Manifest -->
+    <string name="app_name">WelnessMind</string>
+    <string name="app_header">Welness Mind</string>
+<!--    Home Activity -->
+    <string name="primeiro_acesso">Primeiro Acesso?</string>
+    <string name="btn_cadastro">Realize seu Cadastro</string>
+    <string name="possui_conta">Já possui uma conta?</string>
+    <string name="login">Faça o login abaixo</string>
+    <string name="btn_login">Entrar</string>
+<!--    Conditional Activity -->
+    <string name="decision_paciente">Está procurando suporte e \n orientações?</string>
+    <string name="btn_paciente">Toque aqui para seguir</string>
+    <string name="btn_profissional">Registrar credenciais</string>
+    <string name="decision_profissional">Para profissionais da saúde:</string>
+</resources>
