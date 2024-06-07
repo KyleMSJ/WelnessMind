@@ -10,11 +10,18 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        val button = findViewById<Button>(R.id.btn_cadastro)
-        button.setOnClickListener {
+        val buttonRegister = findViewById<Button>(R.id.btn_cadastro)
+        buttonRegister.setOnClickListener {
             val intent = Intent(this, ConditionalActivity::class.java)
             startActivity(intent)
         }
+
+        // TODO
+//        val buttonLogin = findViewById<Button>(R.id.btn_cadastro)
+//        buttonLogin.setOnClickListener {
+//            val intent = Intent(this, ConditionalActivity::class.java)
+//            startActivity(intent)
+//        }
         }
 
 

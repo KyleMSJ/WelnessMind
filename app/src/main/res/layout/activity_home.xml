@@ -16,8 +16,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/welness_mind_logo" />
 
-    <!--    TODO pegar a fonte Segoe UI -->
-
     <TextView
         android:id="@+id/decision_paciente"
         style="@style/paragraph"

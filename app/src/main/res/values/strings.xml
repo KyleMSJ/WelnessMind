@@ -13,4 +13,32 @@
     <string name="btn_paciente">Toque aqui para seguir</string>
     <string name="btn_profissional">Registrar credenciais</string>
     <string name="decision_profissional">Para profissionais da saúde:</string>
+<!--    Cadastro Usuário -->
+    <string name="registerUser">Cadastro Usuário</string>
+    <string name="nome">Nome Completo</string>
+    <string name="email">E-mail</string>
+    <string name="documento_user">CPF (apenas números)</string>
+    <string name="estado_civil">Estado Civil: </string>
+    <string name="rb_state5">Viúvo(a)</string>
+    <string name="rb_state4">Divorciado(a)</string>
+    <string name="rb_state3">Separado(a)</string>
+    <string name="rb_state2">Casado(a)</string>
+    <string name="rb_state1">Solteiro(a)</string>
+    <string name="idade_user">Idade</string>
+    <string name="renda_familiar">Renda Familiar: </string>
+    <string name="rb_renda1">Até 2 S.M.</string>
+    <string name="rb_renda2">De 2 a 4 S.M.</string>
+    <string name="rb_renda3">De 4 a 7 S.M.</string>
+    <string name="rb_renda4">+7 S.M.</string>
+    <string name="escolaridade">Escolaridade</string>
+    <string name="ensino_fundamental">Ensino Fundamental</string>
+    <string name="ensino_medio">Ensino Médio</string>
+    <string name="ensino_superior">Ensino Superior</string>
+    <string name="pos_graduacao">Pós-graduação</string>
+    <string name="login_text">Já tenho uma conta</string>
+    <string name="btn_cadastrar">Cadastrar</string>
+    <!--    Cadastro Profissional -->
+    <string name="registerProfessional">Cadastro Profissional</string>
+    <string name="num_registro">CRP (apenas números)</string>
+    <string name="especialidade">Especialidade</string>
 </resources>

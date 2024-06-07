@@ -21,6 +21,14 @@
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity
+            android:name=".PacienteActivity"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <activity
+            android:name="ifsp.project.welnessmind.ProfissionalActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:exported="false"/>
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="Welness Mind"
@@ -31,6 +39,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
