@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:fillViewport="true">
+<LinearLayout
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,8 +43,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginRight="16dp"
         android:hint="@string/nome"
-        android:importantForAutofill="no"
-        android:inputType="text"
+        android:inputType="textCapSentences"
         android:textColorHint="@color/royal_blue" />
 
     <EditText
@@ -57,8 +60,8 @@
         android:textColorHint="@color/royal_blue" />
 
     <EditText
-        android:maxLength="10"
         android:id="@+id/num_registro"
+        android:maxLength="10"
         android:layout_width="200dp"
         android:layout_height="48dp"
         android:layout_marginLeft="16dp"
@@ -70,8 +73,8 @@
         android:textColorHint="@color/royal_blue" />
 
     <EditText
-        android:maxLength="20"
         android:id="@+id/especialidade"
+        android:maxLength="20"
         android:layout_width="200dp"
         android:layout_height="48dp"
         android:layout_marginLeft="16dp"
@@ -79,7 +82,7 @@
         android:layout_marginRight="16dp"
         android:hint="@string/especialidade"
         android:importantForAutofill="no"
-        android:inputType="text"
+        android:inputType="textCapSentences"
         android:textColorHint="@color/royal_blue" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -87,7 +90,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tv_login"
             style="@style/Widget.AppCompat.EditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -106,9 +109,10 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
             android:background="@drawable/button"
-            android:textColor="@color/white"
             android:text="@string/btn_cadastrar"
-            app:layout_constraintBottom_toBottomOf="@+id/textView"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_login"
+            app:layout_constraintEnd_toEndOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </LinearLayout>
+</ScrollView>

@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import ifsp.project.welnessmind.presentation.cadastro.PacienteActivity
+import ifsp.project.welnessmind.presentation.cadastro.ProfissionalActivity
 
 class ConditionalActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

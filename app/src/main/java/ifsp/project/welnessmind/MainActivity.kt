@@ -3,7 +3,7 @@ package ifsp.project.welnessmind
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import java.util.logging.Handler
+import ifsp.project.welnessmind.presentation.cadastro.HomeActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         supportActionBar?.hide()
-
+        // TODO Deixar apenas essa activity e o resto como fragment
         android.os.Handler().postDelayed({
             val intent = Intent(this@MainActivity, HomeActivity::class.java)
             startActivity(intent)
