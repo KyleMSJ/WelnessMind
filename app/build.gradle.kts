@@ -8,7 +8,6 @@ android {
     namespace = "ifsp.project.welnessmind"
     compileSdk = 33
 
-
     defaultConfig {
         applicationId = "ifsp.project.welnessmind"
         minSdk = 27
@@ -19,6 +18,9 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        viewBinding = true
+    }
 
     buildTypes {
         release {
@@ -71,8 +73,10 @@ dependencies {
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
+    // Testes unitários
     testImplementation("junit:junit:4.13.2")
 
+    // Testes instrumentados
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 }

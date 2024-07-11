@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import ifsp.project.welnessmind.data.db.dao.ProfessionalDAO
 import ifsp.project.welnessmind.data.db.entity.ProfessionalEntity
 import ifsp.project.welnessmind.data.repository.ProfessionalRepository
-
+// Paralelo ao 'DatabaseDataSource' do my-subscribers-app
 class ProfessionalUseCase (
     private val professionalDAO: ProfessionalDAO
 ): ProfessionalRepository {

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:xlmns="http://schemas.android.com/tools"
+    android:id="@+id/main_graph.xml"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="ifsp.project.welnessmind.presentation.cadastro.fragments.HomeFragment"
+        android:label="@string/tela_inicial"
+        xlmns:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_conditionalFragment"
+            app:destination="@id/conditionalFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_loginActivity"
+            app:destination="@id/loginActivity" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/conditionalFragment"
+        android:name="ifsp.project.welnessmind.presentation.cadastro.fragments.ConditionalFragment"
+        android:label="@string/conditional_screen"
+        xlmns:layout="@layout/fragment_conditional">
+        <action
+            android:id="@+id/action_conditionalFragment_to_professionalFragment"
+            app:destination="@id/professionalFragment" />
+        <action
+            android:id="@+id/action_conditionalFragment_to_patientFragment"
+            app:destination="@id/patientFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/patientFragment"
+        android:name="ifsp.project.welnessmind.presentation.cadastro.fragments.PatientFragment"
+        android:label="@string/subscriber_Title"
+        xlmns:layout="@layout/fragment_patient" />
+
+    <fragment
+        android:id="@+id/professionalFragment"
+        android:name="ifsp.project.welnessmind.presentation.cadastro.fragments.ProfessionalFragment"
+        android:label="@string/subscriber_Title"
+        xlmns:layout="@layout/fragment_professional"/>
+
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="ifsp.project.welnessmind.LoginActivity"
+        android:label="LoginActivity"
+        xlmns:layout="@layout/activity_login"/>
+
+</navigation>

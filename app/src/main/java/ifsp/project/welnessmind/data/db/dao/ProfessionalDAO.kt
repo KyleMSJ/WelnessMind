@@ -3,13 +3,15 @@ package ifsp.project.welnessmind.data.db.dao
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import ifsp.project.welnessmind.data.db.entity.ProfessionalEntity
 
 @Dao
 interface ProfessionalDAO {
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE) // Se já existir um item com a mesma chave,
+    // ele será substituído pelo novo item devido à estratégia de conflito REPLACE.
     fun insert(professional: ProfessionalEntity): Long
 
    @Query("SELECT * FROM professional WHERE id = :id")
@@ -22,7 +24,7 @@ interface ProfessionalDAO {
     fun update(professional: ProfessionalEntity)
 
     @Query("DELETE FROM professional WHERE id = :id")
-    fun delete(id: Long): Int
+    fun delete(id: Long)
 
     @Query("DELETE FROM professional")
     fun deleteAll()

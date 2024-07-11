@@ -1,4 +1,4 @@
-package ifsp.project.welnessmind.presentation
+package ifsp.project.welnessmind.presentation.cadastro
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -25,9 +25,23 @@ class PatientViewModel(
         }
     }
 
-  /*  fun updatePatient(patient: PatientEntity) {
+    // TODO
+    //  arrumar essa função
+   /* fun updatePatient(patient: PatientEntity) {
         viewModelScope.launch {
-            useCase.updatePatient(patient)
+            repository.updatePatient(patient)
         }
     }*/
+
+    fun deletePatient(id: Long) {
+        viewModelScope.launch {
+            repository.deletePatient(id)
+        }
+    }
+
+    fun deleteAllPatients() {
+        viewModelScope.launch {
+            repository.deleteAllPatients()
+        }
+    }
 }

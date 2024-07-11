@@ -13,25 +13,9 @@
         tools:targetApi="33">
 <!--        TODO criar temas compatíveis para o período da noite -->
         <activity
-            android:name=".presentation.cadastro.HomeActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity
             android:name=".LoginActivity"
             android:exported="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity
-            android:name=".ConditionalActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity
-            android:name=".presentation.cadastro.PacienteActivity"
-            android:exported="false"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
-        <activity
-            android:name=".presentation.cadastro.ProfissionalActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:exported="false"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"

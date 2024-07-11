@@ -5,6 +5,7 @@ import ifsp.project.welnessmind.data.db.dao.PatientDAO
 import ifsp.project.welnessmind.data.db.entity.PatientEntity
 import ifsp.project.welnessmind.data.repository.PatientRepository
 
+// Paralelo ao 'DatabaseDataSource' do my-subscribers-app
 class PatientUseCase ( // encapsula um caso de uso específico da aplicação. Ele contém a lógica de negócios e a lógica de aplicação. Responsabilidade: Servir como intermediário entre a camada de apresentação (ViewModel) e a camada de dados (Repository).
     private val patientDAO: PatientDAO
 ): PatientRepository {
@@ -22,11 +23,21 @@ class PatientUseCase ( // encapsula um caso de uso específico da aplicação. E
         return patientDAO.insert(patient)
     }
 
+    // TODO ver o uso de 'Flow' do Kotlin coroutines ao invés do LiveData
     override suspend fun getAllPatients(): LiveData<List<PatientEntity>> {
         return patientDAO.getAll()
     }
 
-    override suspend fun updatePatient(id: Long, name: String, email: String, cpf: String, idade: Int, estadoCivil: Int, rendaFamiliar: Int, escolaridade: Int) {
+    override suspend fun updatePatient(
+        id: Long,
+        name: String,
+        email: String,
+        cpf: String,
+        idade: Int,
+        estadoCivil: Int,
+        rendaFamiliar: Int,
+        escolaridade: Int
+    ) {
         val patient = PatientEntity(
             id = id,
             name = name,
@@ -47,6 +58,4 @@ class PatientUseCase ( // encapsula um caso de uso específico da aplicação. E
     override suspend fun deleteAllPatients() {
         return patientDAO.deleteAll()
     }
-
-
 }

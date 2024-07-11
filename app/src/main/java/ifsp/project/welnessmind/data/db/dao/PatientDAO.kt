@@ -9,6 +9,7 @@ interface PatientDAO { // interface que fornece métodos para realizar operaçõ
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(patient: PatientEntity): Long
 
+    // TODO ver o uso de 'Flow' do Kotlin coroutines
     @Query("SELECT * FROM patient WHERE id = :id")
     fun getPatientById(id: Long): PatientEntity?
 
