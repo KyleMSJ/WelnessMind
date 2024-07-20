@@ -36,7 +36,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:maxLength="50"
-            android:id="@+id/professional_nome"
+            android:id="@+id/professional_layout_nome"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -45,6 +45,7 @@
             android:textColorHint="@color/royal_blue" >
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/professional_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/nome"
@@ -53,7 +54,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:maxLength="30"
-            android:id="@+id/professional_email"
+            android:id="@+id/professional_layout_email"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -62,6 +63,7 @@
             android:textColorHint="@color/royal_blue" >
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/professional_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/email"
@@ -69,8 +71,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/num_registro"
-            android:maxLength="10"
+            android:id="@+id/num_layout_registro"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -79,14 +80,16 @@
             android:textColorHint="@color/royal_blue" >
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/num_registro"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLength="10"
                 android:hint="@string/num_registro"
                 android:inputType="number"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/especialidade"
+            android:id="@+id/especialidade_layout"
             android:maxLength="20"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
@@ -96,6 +99,7 @@
             android:textColorHint="@color/royal_blue" >
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/especialidade"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/especialidade"

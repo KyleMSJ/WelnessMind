@@ -30,7 +30,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.btnLogin.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_loginActivity)
+            findNavController().navigate(R.id.action_homeFragment_to_loginFragment)
         }
     }
 }

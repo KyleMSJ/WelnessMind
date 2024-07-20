@@ -2,18 +2,24 @@
     <!--    Main Activity & Manifest -->
     <string name="app_name">WelnessMind</string>
     <string name="app_header">Welness Mind</string>
+
     <!--    Home Activity -->
+    <string name="tela_inicial">Tela Inicial</string>
     <string name="primeiro_acesso">Primeiro Acesso?</string>
     <string name="btn_cadastro">Realize seu Cadastro</string>
     <string name="possui_conta">Já possui uma conta?</string>
     <string name="login_message">Faça o login abaixo</string>
     <string name="btn_login">Entrar</string>
+
     <!--    Conditional Activity -->
+    <string name="conditional_screen">Como vai usar o app?</string>
     <string name="decision_paciente">Está procurando suporte e \n orientações?</string>
     <string name="btn_paciente">Toque aqui para seguir</string>
     <string name="btn_profissional">Registrar credenciais</string>
     <string name="decision_profissional">Para profissionais da saúde:</string>
+
     <!--    Cadastro Usuário -->
+    <string name="subscriber_Title">Cadastro de Usuário</string>
     <string name="registerUser">Usuário</string>
     <string name="nome">Nome Completo</string>
     <string name="email">E-mail</string>
@@ -37,15 +43,24 @@
     <string name="pos_graduacao">Pós-graduação</string>
     <string name="login_text">Já tenho uma conta</string>
     <string name="btn_cadastrar">Cadastrar</string>
+    <string name="professional_error_to_insert">Ocorreu um erro ao cadastrar o profissional</string>
+
     <!--    Cadastro Profissional -->
     <string name="registerProfessional">Cadastro Profissional</string>
     <string name="num_registro">CRP (apenas números)</string>
     <string name="especialidade">Especialidade</string>
+    <string name="patient_error_to_insert">Ocorreu um erro ao cadastrar o profissional</string>
 
     <!--    Login -->
     <string name="login">Login</string>
     <string name="senha">Senha</string>
     <string name="btn_entrar">Entrar</string>
+    <string name="prompt_email">Email</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome!"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
 
     <!--    Formulário -->
     <string name="bem_vindo">Seja Bem Vindo!</string>
@@ -67,9 +82,8 @@
     <string name="hint_forms_hobbies">(música, jogos, passeio, etc.)</string>
     <string name="tv_forms_medicamento">8. Toma algum medicamento ou suplemento?</string>
     <string name="tv_forms_medicamento2">9. Em caso afirmativo, descreva-os abaixo:</string>
-    <string name="subscriber_Title">Cadastro de Usuário</string>
+
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="tela_inicial">Tela Inicial</string>
-    <string name="conditional_screen">Como vai usar o app?</string>
+    <string name="professionals_list">Lista de Profissionais</string>
+
 </resources>

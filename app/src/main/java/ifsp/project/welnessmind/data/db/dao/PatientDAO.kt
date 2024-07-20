@@ -7,11 +7,10 @@ import ifsp.project.welnessmind.data.db.entity.PatientEntity
 @Dao
 interface PatientDAO { // interface que fornece métodos para realizar operações de acesso a dados no banco de dados. Define as operações CRUD (Create, Read, Update, Delete) diretamente no banco de dados.
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(patient: PatientEntity): Long
+    suspend fun insert(patient: PatientEntity): Long
 
-    // TODO ver o uso de 'Flow' do Kotlin coroutines
     @Query("SELECT * FROM patient WHERE id = :id")
-    fun getPatientById(id: Long): PatientEntity?
+    suspend fun getPatientById(id: Long): PatientEntity?
 
     @Query("SELECT * FROM patient")
     fun getAll(): LiveData<List<PatientEntity>>
@@ -19,8 +18,8 @@ interface PatientDAO { // interface que fornece métodos para realizar operaçõ
     @Update
     fun update(patient: PatientEntity)
     @Query("DELETE FROM patient WHERE id = :id")
-    fun delete(id: Long)
+    suspend fun delete(id: Long)
     @Query("DELETE FROM patient")
-    fun deleteAll()
+    suspend fun deleteAll()
 
 }

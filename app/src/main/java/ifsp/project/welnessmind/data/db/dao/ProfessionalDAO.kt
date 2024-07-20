@@ -12,20 +12,20 @@ import ifsp.project.welnessmind.data.db.entity.ProfessionalEntity
 interface ProfessionalDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE) // Se já existir um item com a mesma chave,
     // ele será substituído pelo novo item devido à estratégia de conflito REPLACE.
-    fun insert(professional: ProfessionalEntity): Long
+    suspend fun insert(professional: ProfessionalEntity): Long
 
    @Query("SELECT * FROM professional WHERE id = :id")
-    fun getProfessionalById(id: Long): ProfessionalEntity?
+    suspend fun getProfessionalById(id: Long): ProfessionalEntity?
 
     @Query("SELECT * FROM professional")
     fun getAll(): LiveData<List<ProfessionalEntity>> // toda vez que inserir ou atualizar alguma coisa no banco de dados, automaticamente vai disparar o evento e quem tiver escutando o LiveData, vai reagir a esse evento e vai atualizar os dados para o usuário de forma autómática
 
     @Update
-    fun update(professional: ProfessionalEntity)
+    suspend fun update(professional: ProfessionalEntity)
 
     @Query("DELETE FROM professional WHERE id = :id")
-    fun delete(id: Long)
+    suspend fun delete(id: Long)
 
     @Query("DELETE FROM professional")
-    fun deleteAll()
+    suspend fun deleteAll()
 }

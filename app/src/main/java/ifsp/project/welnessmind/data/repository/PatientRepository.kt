@@ -7,7 +7,7 @@ interface PatientRepository  // O 'Repository': Abstrai a origem dos dados, forn
     // Responsabilidade: Lidar com a lógica de acesso aos dados e operações CRUD básicas
 {
     suspend fun insertPatient(name: String, email: String, cpf: String, idade: Int, estadoCivil: Int, rendaFamiliar: Int, escolaridade: Int): Long // 'suspend' - usada para execuções assíncronas sem interromper a thread principal (melhor performance e responsividade na UI)
-    suspend fun  getAllPatients(): LiveData<List<PatientEntity>>
+    fun  getAllPatients(): LiveData<List<PatientEntity>>
     suspend fun  updatePatient(id: Long, name: String, email: String, cpf: String, idade: Int, estadoCivil: Int, rendaFamiliar: Int, escolaridade: Int)
     suspend fun deletePatient(id: Long)
     suspend fun deleteAllPatients()

@@ -1,30 +1,51 @@
 package ifsp.project.welnessmind.presentation.cadastro.fragments
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.textfield.TextInputLayout
-import ifsp.project.welnessmind.LoginActivity
+import ifsp.project.welnessmind.R
+import ifsp.project.welnessmind.data.db.AppDatabase
+import ifsp.project.welnessmind.data.db.dao.ProfessionalDAO
+import ifsp.project.welnessmind.data.repository.ProfessionalRepository
 import ifsp.project.welnessmind.databinding.FragmentProfessionalBinding
+import ifsp.project.welnessmind.domain.ProfessionalUseCase
+import ifsp.project.welnessmind.extension.hideKeyboard
+import ifsp.project.welnessmind.presentation.cadastro.ProfessionalViewModel
 
 class ProfessionalFragment : Fragment() {
 
 private var _binding: FragmentProfessionalBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var etNome: TextInputLayout
-    private lateinit var etEmail: TextInputLayout
-    private lateinit var etRegistro: TextInputLayout
-    private lateinit var etEspecialidade: TextInputLayout
+    private lateinit var etNome: EditText
+    private lateinit var etEmail: EditText
+    private lateinit var etRegistro: EditText
+    private lateinit var etEspecialidade: EditText
 
-    private lateinit var btnCadastrar: Button
+    private lateinit var btnCadastroPro: Button
 
+    private val viewModel: ProfessionalViewModel by viewModels {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                val professionalDAO: ProfessionalDAO =
+                    AppDatabase.getInstance(requireContext()).professionalDao
+
+                val repository: ProfessionalRepository = ProfessionalUseCase(professionalDAO)
+                return ProfessionalViewModel(repository) as T
+            }
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,46 +58,81 @@ private var _binding: FragmentProfessionalBinding? = null
         super.onViewCreated(view, savedInstanceState)
 
         inicializaVariaveis()
-        validaCampos()
+        observeEvents()
+        setListeners()
 
         binding.tvLogin.setOnClickListener {
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            startActivity(intent)
+            findNavController().navigate(R.id.action_professionalFragment_to_loginFragment)
         }
     }
 
     private fun inicializaVariaveis() {
-        etNome = binding.professionalNome
+        etNome = binding.professionalName
         etEmail = binding.professionalEmail
         etRegistro = binding.numRegistro
         etEspecialidade = binding.especialidade
 
-        binding.btnCadastroPro
+        btnCadastroPro = binding.btnCadastroPro
     }
-    private fun validaCampos() {
-        binding.btnCadastroPro.setOnClickListener { view ->
-            if (etNome.editText?.text.isNullOrEmpty() || etEmail.editText?.text.isNullOrEmpty() || etRegistro.editText?.text.isNullOrEmpty() || etEspecialidade.editText?.text.isNullOrEmpty()) {
-                Snackbar.make(view, "Preencha todas as informações", Snackbar.LENGTH_SHORT).show()
-            }
-            else {
-                showSuccessPopup()
-            }
-        }
-    } // TODO implementar essa lógica separado da activity (regra de negócio)
 
     private fun showSuccessPopup() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Sucesso")
         builder.setMessage("Cadastro realizado com sucesso!")
         builder.setPositiveButton("OK") { dialog, _ ->
-            dialog.dismiss()
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            startActivity(intent)
+            dialog.dismiss() // TODO voltar a encaminhar para a tela de Login
+            findNavController().navigate(R.id.action_professionalFragment_to_loginFragment)
         }
         val dialog = builder.create()
         dialog.show()
     }
 
+    private fun observeEvents() {
+        viewModel.professionalStateEventData.observe(viewLifecycleOwner) { professionalState ->
+            when (professionalState) {
+                is ProfessionalViewModel.ProfessionalState.Inserted -> {
+                    clearFields()
+                    hideKeyboard()
+                    requireView().requestFocus()
+                }
+            }
+        }
+
+        viewModel.messageEventData.observe(viewLifecycleOwner) { stringResId ->
+            Snackbar.make(requireView(), stringResId, Snackbar.LENGTH_LONG).show()
+        }
+    }
+
+    private fun setListeners() {
+        btnCadastroPro.setOnClickListener { view ->
+            val name = etNome.text.toString()
+            val email = etEmail.text.toString()
+            val num = etRegistro.text.toString()
+            val espec = etEspecialidade.text.toString()
+
+            if (etNome.text.isNullOrEmpty() || etEmail.text.isNullOrEmpty() || etRegistro.text.isNullOrEmpty() || etEspecialidade.text.isNullOrEmpty()) {
+                Snackbar.make(view, "Preencha todas as informações", Snackbar.LENGTH_SHORT).show()
+            }
+            else {
+                viewModel.addProfessional(name, email, num, espec)
+                showSuccessPopup()
+            }
+        }
+    }
+
+    private fun clearFields() {
+        etNome.text?.clear()
+        etEmail.text?.clear()
+        etRegistro.text?.clear()
+        etEspecialidade.text?.clear()
+    }
+
+    private fun hideKeyboard() {
+        val parentActivity = requireActivity()
+        if (parentActivity is AppCompatActivity) {
+            parentActivity.hideKeyboard()
+        }
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

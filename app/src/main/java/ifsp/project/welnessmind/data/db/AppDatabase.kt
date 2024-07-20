@@ -28,12 +28,13 @@ abstract class AppDatabase : RoomDatabase() {
         fun getInstance(context: Context): AppDatabase {
             synchronized(this) { // Garante que apenas uma thread possa executar o bloco de código dentro do synchronized ao mesmo tempo, garantindo segurança em um ambiente multi-thread.
                 var instance: AppDatabase? = INSTANCE
-                if (instance == null)
+                if (instance == null) {
                     instance = Room.databaseBuilder(
                         context,
                         AppDatabase::class.java,
                         "app_database"
                     ).build()
+                }
 
                 return instance
                 }

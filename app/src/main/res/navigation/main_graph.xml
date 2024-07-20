@@ -14,8 +14,9 @@
             android:id="@+id/action_homeFragment_to_conditionalFragment"
             app:destination="@id/conditionalFragment" />
         <action
-            android:id="@+id/action_homeFragment_to_loginActivity"
-            app:destination="@id/loginActivity" />
+            android:id="@+id/action_homeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+
     </fragment>
 
     <fragment
@@ -35,18 +36,45 @@
         android:id="@+id/patientFragment"
         android:name="ifsp.project.welnessmind.presentation.cadastro.fragments.PatientFragment"
         android:label="@string/subscriber_Title"
-        xlmns:layout="@layout/fragment_patient" />
+        xlmns:layout="@layout/fragment_patient" >
+        <action
+            android:id="@+id/action_patientFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/professionalFragment"
         android:name="ifsp.project.welnessmind.presentation.cadastro.fragments.ProfessionalFragment"
         android:label="@string/subscriber_Title"
-        xlmns:layout="@layout/fragment_professional"/>
+        xlmns:layout="@layout/fragment_professional">
+        <action
+            android:id="@+id/action_professionalFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
 
-    <activity
-        android:id="@+id/loginActivity"
-        android:name="ifsp.project.welnessmind.LoginActivity"
-        android:label="LoginActivity"
-        xlmns:layout="@layout/activity_login"/>
+
+    <fragment
+        android:id="@+id/professionalListFragment"
+        android:name="ifsp.project.welnessmind.presentation.cadastro.fragments.ProfessionalListFragment"
+        android:label="@string/professionals_list"
+        xlmns:layout="@layout/fragment_professional_list" />
+    <fragment
+        android:id="@+id/formsFragment"
+        android:name="ifsp.project.welnessmind.presentation.cadastro.fragments.FormsFragment"
+        android:label="FormsFragment"
+        xlmns:layout="@layout/fragment_forms">
+        <action
+            android:id="@+id/action_formsFragment_to_professionalListFragment"
+            app:destination="@id/professionalListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="ifsp.project.welnessmind.ui.login.LoginFragment"
+        android:label="@string/login"
+        xlmns:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_formsFragment"
+            app:destination="@id/formsFragment" />
+    </fragment>
 
 </navigation>

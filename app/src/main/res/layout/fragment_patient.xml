@@ -21,8 +21,7 @@
                 android:src="@drawable/welness_mind_logo" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/user_nome"
-            android:maxLength="50"
+            android:id="@+id/user_layout_nome"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -30,15 +29,16 @@
             android:textColorHint="@color/royal_blue">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_nome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/nome"
+                android:maxLength="50"
                 android:inputType="textCapSentences"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/user_email"
-            android:maxLength="30"
+            android:id="@+id/user_layout_email"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -46,23 +46,27 @@
             android:textColorHint="@color/royal_blue" >
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/email"
+                android:maxLength="30"
                 android:inputType="textEmailAddress"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/user_document"
-            android:maxLength="11"
+            android:id="@+id/user_layout_document"
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="24dp"
             android:textColorHint="@color/royal_blue" >
+
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/user_document"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:maxLength="11"
                 android:hint="@string/documento_user"
                 android:inputType="number|numberSigned"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -133,8 +137,7 @@
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/user_idade"
-                android:maxLength="2"
+                android:id="@+id/user_layout_idade"
                 style="@style/paragraph"
                 android:textColor="@color/black"
                 android:layout_width="80dp"
@@ -142,9 +145,11 @@
                 android:layout_marginStart="16dp"
                 android:textColorHint="@color/royal_blue" >
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/user_idade"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/idade_user"
+                    android:maxLength="2"
                     android:inputType="number"
                     />
             </com.google.android.material.textfield.TextInputLayout>
