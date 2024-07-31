@@ -5,12 +5,15 @@ import androidx.room.*
 import ifsp.project.welnessmind.data.db.entity.PatientEntity
 
 @Dao
-interface PatientDAO { // interface que fornece métodos para realizar operações de acesso a dados no banco de dados. Define as operações CRUD (Create, Read, Update, Delete) diretamente no banco de dados.
+interface PatientDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(patient: PatientEntity): Long
 
     @Query("SELECT * FROM patient WHERE id = :id")
     suspend fun getPatientById(id: Long): PatientEntity?
+
+    @Query("SELECT * FROM patient WHERE email = :email")
+    suspend fun getPatientByEmail(email: String): PatientEntity?
 
     @Query("SELECT * FROM patient")
     fun getAll(): LiveData<List<PatientEntity>>

@@ -24,8 +24,11 @@
                 style="@style/bem_vindo"/>
 
             <Button
+                android:id="@+id/btn_avancar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@drawable/button"
+                android:textColor="@color/white"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentEnd="true"
                 android:layout_marginEnd="24dp"
@@ -34,7 +37,7 @@
 
         </RelativeLayout>
         <TextView
-            android:layout_width="180dp"
+            android:layout_width="240dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="12dp"
             android:layout_height="wrap_content"
@@ -60,7 +63,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_sono"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:textSize="14sp"
                 android:hint="@string/hint_forms_sono" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -81,7 +84,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_estudo"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:textSize="14sp"
                 android:hint="@string/hint_forms_estudo"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -104,7 +107,7 @@
                 android:id="@+id/et_trabalho"
                 android:layout_width="match_parent"
                 android:textSize="14sp"
-                android:layout_height="30dp"/>
+                android:layout_height="40dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -121,12 +124,14 @@
             android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/rb_treina"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="36dp"
                 android:text="@string/rb_yes"/>
 
             <RadioButton
+                android:id="@+id/rb_nao_treina"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -149,7 +154,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_atividadeFisica2"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"/>
+                android:layout_height="40dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -168,7 +173,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_atividadeFisica3"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
+                android:layout_height="40dp"
                 android:hint="@string/hint_forms_atividadeFisica3"
                 android:textSize="14sp"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -191,7 +196,7 @@
                 android:hint="@string/hint_forms_hobbies"
                 android:textSize="14sp"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"/>
+                android:layout_height="40dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -208,12 +213,14 @@
             android:orientation="horizontal">
 
             <RadioButton
+                android:id="@+id/rb_toma_medicamento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="36dp"
                 android:text="@string/rb_yes"/>
 
             <RadioButton
+                android:id="@+id/rb_nao_toma_medicamento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -236,7 +243,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_medicamento2"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"/>
+                android:layout_height="40dp"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 

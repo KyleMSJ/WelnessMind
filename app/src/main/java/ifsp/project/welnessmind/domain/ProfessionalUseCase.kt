@@ -22,6 +22,14 @@ class ProfessionalUseCase (
         return professionalDAO.getAll()
     }
 
+    override suspend fun getProfessionalById(id: Long): ProfessionalEntity? {
+        return professionalDAO.getProfessionalById(id)
+    }
+
+    override fun observeProfessionalById(id: Long): LiveData<ProfessionalEntity> {
+        return professionalDAO.observeProfessionalById(id)
+    }
+
     override suspend fun updateProfessional(
         id: Long,
         name: String,

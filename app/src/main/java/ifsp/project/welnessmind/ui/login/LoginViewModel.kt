@@ -1,15 +1,16 @@
 package ifsp.project.welnessmind.ui.login
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import android.util.Patterns
-import ifsp.project.welnessmind.data.LoginRepository
-import ifsp.project.welnessmind.data.Result
+import androidx.lifecycle.viewModelScope
+import ifsp.project.welnessmind.data.repository.UserRepository
 
 import ifsp.project.welnessmind.R
+import kotlinx.coroutines.launch
 
-class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel() {
+class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     private val _loginForm = MutableLiveData<LoginFormState>()
     val loginFormState: LiveData<LoginFormState> = _loginForm
@@ -17,39 +18,64 @@ class LoginViewModel(private val loginRepository: LoginRepository) : ViewModel()
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
 
-    fun login(username: String, password: String) {
-        // can be launched in a separate asynchronous job
-        val result = loginRepository.login(username, password)
 
-        if (result is Result.Success) {
-            _loginResult.value =
-                LoginResult(success = LoggedInUserView(displayName = result.data.displayName))
-        } else {
-            _loginResult.value = LoginResult(error = R.string.login_failed)
+    fun generatePasswordForUserId(userId: Long, userType: UserType) {
+        viewModelScope.launch {
+
+            Log.d("LoginViewModel", "Generating password for userId: $userId, userType: $userType")
+            val result = when (userType) {
+                UserType.PACIENTE -> userRepository.generatePasswordForPatientById(userId)
+                UserType.PROFISSIONAL -> userRepository.generatePasswordForProfessionalById(userId)
+            }
+            if (result is Result.Success) {
+                _loginResult.value = LoginResult(success = LoggedInUserView(displayName = "", password = result.data)   )
+            } else {
+                Log.e("LoginViewModel", "Error generating password")
+                _loginResult.value = LoginResult(error = R.string.password_generation_failed)
+            }
         }
     }
 
-    fun loginDataChanged(username: String, password: String) {
-        if (!isUserNameValid(username)) {
-            _loginForm.value = LoginFormState(usernameError = R.string.invalid_username)
-        } else if (!isPasswordValid(password)) {
-            _loginForm.value = LoginFormState(passwordError = R.string.invalid_password)
-        } else {
-            _loginForm.value = LoginFormState(isDataValid = true)
+    fun login(username: String, password: String, userType: UserType) {
+        viewModelScope.launch {
+            Log.d("LoginViewModel", "Attempting login for username: $username, userType: $userType")
+            val result = when (userType) {
+                UserType.PACIENTE -> userRepository.loginPatient(username, password)
+                UserType.PROFISSIONAL -> userRepository.loginProfessional(username, password)
+            }
+            Log.d("LoginViewModel", "Login result: $result")
+            when (result) {
+                is Result.Success -> _loginResult.value = LoginResult(success = LoggedInUserView(displayName = result.data.name))
+                is Result.Error -> {
+                    Log.e("LoginViewModel", "Login failed for username: $username, userType: $userType")
+                    val errorMessage = when (result.exception.message) {
+                        "Email conflict" -> R.string.email_conflict_error
+                        "Senha inválida" -> R.string.invalid_password_error
+                        else -> R.string.login_failed
+                    }
+                    _loginResult.value = LoginResult(error = errorMessage)
+                }
+            }
         }
     }
 
-    // A placeholder username validation check
-    private fun isUserNameValid(username: String): Boolean {
-        return if (username.contains("@")) {
-            Patterns.EMAIL_ADDRESS.matcher(username).matches()
-        } else {
-            username.isNotBlank()
-        }
-    }
+    data class LoginFormState(
+        val usernameError: Int? = null,
+        val passwordError: Int? = null,
+        val isDataValid: Boolean = false
+    )
 
-    // A placeholder password validation check
-    private fun isPasswordValid(password: String): Boolean {
-        return password.length > 5
+    data class LoginResult(
+        val success: LoggedInUserView? = null,
+        val error: Int? = null
+    )
+
+    data class LoggedInUserView(
+        val displayName: String,
+        val password: String? = null
+    )
+
+    enum class UserType {
+        PACIENTE, PROFISSIONAL
     }
 }

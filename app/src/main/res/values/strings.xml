@@ -49,7 +49,7 @@
     <string name="registerProfessional">Cadastro Profissional</string>
     <string name="num_registro">CRP (apenas números)</string>
     <string name="especialidade">Especialidade</string>
-    <string name="patient_error_to_insert">Ocorreu um erro ao cadastrar o profissional</string>
+    <string name="patient_error_to_insert">Ocorreu um erro ao cadastrar o paciente</string>
 
     <!--    Login -->
     <string name="login">Login</string>
@@ -57,33 +57,45 @@
     <string name="btn_entrar">Entrar</string>
     <string name="prompt_email">Email</string>
     <string name="action_sign_in_short">Sign in</string>
-    <string name="welcome">"Welcome!"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="welcome">"Bem-vindo! "</string>
+    <string name="invalid_username">Não é um usuário válido</string>
+    <string name="invalid_password">A senha deve ter mais de 8 caracteres</string>
+    <string name="email_conflict_error">O email já está sendo utilizado por outro usuário.</string>
+    <string name="login_failed">Login falhou</string>
+    <string name="invalid_password_error">Senha inválida</string>
+    <string name="cadastrar">Não tenho uma conta</string>
 
     <!--    Formulário -->
     <string name="bem_vindo">Seja Bem Vindo!</string>
     <string name="forms_note">Aqui você irá preencher um breve formulário para nos auxiliar a  entender um pouco da sua rotina!</string>
     <string name="btn_avancar">Avançar</string>
-    <string name="tv_forms_sono">1. Quantas horas de sono você teve ontem?</string>
-    <string name="tv_forms_estudo">2. Quantas horas de estudo por dia, em média?</string>
+    <string name="tv_forms_sono">1. Quantas horas de sono você teve ontem?*</string>
+    <string name="tv_forms_estudo">2. Quantas horas de estudo por dia, em média?*</string>
     <string name="hint_forms_sono">Digite apenas o número (ex: 6)</string>
     <string name="hint_forms_estudo">Digite apenas o número (ex: 4)</string>
-    <string name="tv_forms_trabalho">3. Quantas horas de trabalho por dia?</string>
+    <string name="tv_forms_trabalho">3. Quantas horas de trabalho por dia?*</string>
     <string name="hint_forms_trabalho">Digite apenas o número (ex: 9)</string>
-    <string name="tv_forms_atividadeFisica">4. Faz alguma atividade física?</string>
+    <string name="tv_forms_atividadeFisica">4. Faz alguma atividade física?*</string>
     <string name="rb_yes">Sim</string>
     <string name="rb_no">Não</string>
     <string name="tv_forms_atividadeFisica2">5. Se sim, qual(is)?</string>
     <string name="tv_forms_atividadeFisica3">6. Com qual frequência?</string>
-    <string name="hint_forms_atividadeFisica3">(Ex: 1x por semana, todos os dias...)</string>
+    <string name="hint_forms_atividadeFisica3">(Ex: 1x por semana, todos os dias…)</string>
     <string name="tv_forms_hobbies">7. Quais são seus hobbies?</string>
     <string name="hint_forms_hobbies">(música, jogos, passeio, etc.)</string>
-    <string name="tv_forms_medicamento">8. Toma algum medicamento ou suplemento?</string>
+    <string name="tv_forms_medicamento">8. Toma algum medicamento ou suplemento?*</string>
     <string name="tv_forms_medicamento2">9. Em caso afirmativo, descreva-os abaixo:</string>
+    <string name="forms_error_to_insert">Ocorreu um erro ao registrar o formulário</string>
+    <string name="forms">Formulário</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- Lista de Profissionais  -->
     <string name="professionals_list">Lista de Profissionais</string>
+    <string name="password_generation_failed">A geração de senha falhou</string>
+    <string name="marcar_consulta">Marcar Consulta</string>
+    <string name="info_home">Clique na casa ao lado\npara ver os seus \nindicadores de saúde</string>
+    <string name="registerPaciente">Cadastro Paciente</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="info_register_office">Clique no mapa para selecionar a localização do consultório</string>
 
 </resources>

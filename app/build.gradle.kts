@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -85,7 +86,7 @@ implementation("androidx.annotation:annotation:1.8.0")
     implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
 
 // API Google
-//    implementation ("com.google.android.gms:play-services-maps:18.2.0")
+    implementation ("com.google.android.gms:play-services-maps:19.0.0")
 //    implementation ("com.google.api-client:google-api-client-android:1.30.10")
 
     implementation("androidx.core:core-ktx:1.13.1")
@@ -102,6 +103,7 @@ implementation("androidx.annotation:annotation:1.8.0")
 
     // Testes unitários
     testImplementation("junit:junit:4.13.2")
+    testImplementation("androidx.room:room-testing:2.6.1")
 
     // Testes instrumentados
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
