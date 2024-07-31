@@ -1,22 +1,26 @@
 package ifsp.project.welnessmind
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import ifsp.project.welnessmind.presentation.cadastro.HomeActivity
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
+import ifsp.project.welnessmind.databinding.ActivityMainBinding
+import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
-        supportActionBar?.hide()
-        // TODO Deixar apenas essa activity e o resto como fragment
-        android.os.Handler().postDelayed({
-            val intent = Intent(this@MainActivity, HomeActivity::class.java)
-            startActivity(intent)
-            finish()
-        },3000)
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        binding.appToolbar.setupWithNavController(navController, appBarConfiguration)
     }
 
 }

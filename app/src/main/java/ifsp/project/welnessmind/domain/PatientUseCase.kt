@@ -22,11 +22,20 @@ class PatientUseCase ( // encapsula um caso de uso específico da aplicação. E
         return patientDAO.insert(patient)
     }
 
-    override suspend fun getAllPatients(): LiveData<List<PatientEntity>> {
+    override fun getAllPatients(): LiveData<List<PatientEntity>> {
         return patientDAO.getAll()
     }
 
-    override suspend fun updatePatient(id: Long, name: String, email: String, cpf: String, idade: Int, estadoCivil: Int, rendaFamiliar: Int, escolaridade: Int) {
+    override suspend fun updatePatient(
+        id: Long,
+        name: String,
+        email: String,
+        cpf: String,
+        idade: Int,
+        estadoCivil: Int,
+        rendaFamiliar: Int,
+        escolaridade: Int
+    ) {
         val patient = PatientEntity(
             id = id,
             name = name,
@@ -47,6 +56,4 @@ class PatientUseCase ( // encapsula um caso de uso específico da aplicação. E
     override suspend fun deleteAllPatients() {
         return patientDAO.deleteAll()
     }
-
-
 }

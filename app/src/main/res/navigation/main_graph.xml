@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--suppress NavigationFile -->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:xlmns="http://schemas.android.com/tools"
+    android:id="@+id/main_graph.xml"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="ifsp.project.welnessmind.ui.cadastro.fragments.HomeFragment"
+        android:label="@string/tela_inicial"
+        xlmns:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_conditionalFragment"
+            app:destination="@id/conditionalFragment"/>
+        <action
+            android:id="@+id/action_homeFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/conditionalFragment"
+        android:name="ifsp.project.welnessmind.ui.cadastro.fragments.ConditionalFragment"
+        android:label="@string/conditional_screen"
+        xlmns:layout="@layout/fragment_conditional">
+        <action
+            android:id="@+id/action_conditionalFragment_to_professionalFragment"
+            app:destination="@id/professionalFragment" />
+        <action
+            android:id="@+id/action_conditionalFragment_to_patientFragment"
+            app:destination="@id/patientFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/patientFragment"
+        android:name="ifsp.project.welnessmind.ui.cadastro.fragments.PatientFragment"
+        android:label="@string/subscriber_Title"
+        xlmns:layout="@layout/fragment_patient" >
+        <action
+            android:id="@+id/action_patientFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/professionalFragment"
+        android:name="ifsp.project.welnessmind.ui.cadastro.fragments.ProfessionalFragment"
+        android:label="@string/subscriber_Title"
+        xlmns:layout="@layout/fragment_professional">
+        <action
+            android:id="@+id/action_professionalFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/formsFragment"
+        android:name="ifsp.project.welnessmind.ui.cadastro.fragments.FormsFragment"
+        android:label="@string/forms"
+        xlmns:layout="@layout/fragment_forms">
+        <action
+            android:id="@+id/action_formsFragment_to_professionalListFragment"
+            app:destination="@id/professionalListFragment" />
+        <action
+            android:id="@+id/action_formsFragment_pop"
+            app:popUpTo="@id/formsFragment"
+            app:popUpToInclusive="true" />
+        <argument
+            android:name="isFromSignup"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="ifsp.project.welnessmind.ui.login.LoginFragment"
+        android:label="@string/login"
+        xlmns:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_formsFragment"
+            app:destination="@id/formsFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_professionalListFragment"
+            app:destination="@id/professionalListFragment" />
+        <argument
+            android:name="isFromSignup"
+            app:argType="boolean"
+            android:defaultValue="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/professionalListFragment"
+        android:name="ifsp.project.welnessmind.ui.cadastro.fragments.ProfessionalListFragment"
+        android:label="@string/professionals_list"
+        xlmns:layout="@layout/fragment_professional_list" >
+        <action
+            android:id="@+id/action_professionalListFragment_to_professionalProfileFragment"
+            app:destination="@id/professionalProfileFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/professionalProfileFragment"
+        android:name="ifsp.project.welnessmind.ui.list.ProfessionalProfileFragment"
+        android:label="ProfessionalProfileFragment"
+        xlmns:layout="@layout/fragment_professional_profile">
+        <argument
+            android:name="professional_id"
+            app:argType="long"/>
+    </fragment>
+
+</navigation>

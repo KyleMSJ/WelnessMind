@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import ifsp.project.welnessmind.data.db.dao.ProfessionalDAO
 import ifsp.project.welnessmind.data.db.entity.ProfessionalEntity
 import ifsp.project.welnessmind.data.repository.ProfessionalRepository
-
 class ProfessionalUseCase (
     private val professionalDAO: ProfessionalDAO
 ): ProfessionalRepository {
@@ -19,8 +18,16 @@ class ProfessionalUseCase (
         return professionalDAO.insert(professional)
     }
 
-    override suspend fun getAllProfessionals(): LiveData<List<ProfessionalEntity>> {
+    override fun getAllProfessionals(): LiveData<List<ProfessionalEntity>> {
         return professionalDAO.getAll()
+    }
+
+    override suspend fun getProfessionalById(id: Long): ProfessionalEntity? {
+        return professionalDAO.getProfessionalById(id)
+    }
+
+    override fun observeProfessionalById(id: Long): LiveData<ProfessionalEntity> {
+        return professionalDAO.observeProfessionalById(id)
     }
 
     override suspend fun updateProfessional(
