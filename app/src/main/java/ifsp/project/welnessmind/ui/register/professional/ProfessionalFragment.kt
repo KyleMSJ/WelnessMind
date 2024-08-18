@@ -1,6 +1,7 @@
-package ifsp.project.welnessmind.ui.cadastro.fragments
+package ifsp.project.welnessmind.ui.register.professional
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,14 +15,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.FirebaseDatabase
 import ifsp.project.welnessmind.R
 import ifsp.project.welnessmind.data.db.AppDatabase
+import ifsp.project.welnessmind.data.db.dao.OfficeLocationDAO
 import ifsp.project.welnessmind.data.db.dao.ProfessionalDAO
 import ifsp.project.welnessmind.data.repository.ProfessionalRepository
 import ifsp.project.welnessmind.databinding.FragmentProfessionalBinding
 import ifsp.project.welnessmind.domain.ProfessionalUseCase
 import ifsp.project.welnessmind.extension.hideKeyboard
-import ifsp.project.welnessmind.ui.cadastro.ProfessionalViewModel
 
 class ProfessionalFragment : Fragment() {
 
@@ -40,8 +42,10 @@ private var _binding: FragmentProfessionalBinding? = null
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 val professionalDAO: ProfessionalDAO =
                     AppDatabase.getInstance(requireContext()).professionalDao
+                val officeLocationDAO: OfficeLocationDAO = AppDatabase.getInstance(requireContext()).officeLocationDao
 
-                val repository: ProfessionalRepository = ProfessionalUseCase(professionalDAO)
+                val firebaseDatabase = FirebaseDatabase.getInstance()
+                val repository: ProfessionalRepository = ProfessionalUseCase(professionalDAO, officeLocationDAO, firebaseDatabase)
                 return ProfessionalViewModel(repository) as T
             }
         }
@@ -104,7 +108,7 @@ private var _binding: FragmentProfessionalBinding? = null
                 Snackbar.make(view, "Preencha todas as informações", Snackbar.LENGTH_SHORT).show()
             }
             else {
-                viewModel.addProfessional(name, email, num, espec) { userId ->
+                viewModel.addProfessional(name, email, num, espec, requireContext()) { userId ->
                     showSuccessPopup(userId)
                 }
             }
@@ -115,10 +119,10 @@ private var _binding: FragmentProfessionalBinding? = null
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Sucesso")
         builder.setMessage("Cadastro realizado com sucesso!")
+        Log.d("ProfessionalFragment", "ID: $userId")
         builder.setPositiveButton("OK") { dialog, _ ->
             dialog.dismiss()
             val bundle = Bundle().apply {
-                putLong("userId", userId)
                 putString("userType", "PROFISSIONAL")
                 putBoolean("isFromSignup", true)
             }

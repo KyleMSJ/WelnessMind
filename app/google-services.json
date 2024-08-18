@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "572194153362",
+    "project_id": "welness-mind",
+    "storage_bucket": "welness-mind.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:572194153362:android:dea6606610cc46a426974b",
+        "android_client_info": {
+          "package_name": "ifsp.project.welnessmind"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMsyI26VAjPF9bwR3fi7x5a6sk5QLGh_A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

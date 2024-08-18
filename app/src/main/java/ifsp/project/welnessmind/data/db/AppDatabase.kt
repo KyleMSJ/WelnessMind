@@ -1,37 +1,37 @@
-@file:OptIn(InternalCoroutinesApi::class, InternalCoroutinesApi::class,
-    InternalCoroutinesApi::class
-)
-
 package ifsp.project.welnessmind.data.db
 
 import android.content.Context
 import androidx.room.AutoMigration
 import androidx.room.Database
-import androidx.room.DeleteTable
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.AutoMigrationSpec
-import androidx.room.migration.Migration
-import androidx.sqlite.db.SupportSQLiteDatabase
 import ifsp.project.welnessmind.data.db.dao.FormsDAO
+import ifsp.project.welnessmind.data.db.dao.OfficeLocationDAO
 import ifsp.project.welnessmind.data.db.dao.PatientDAO
 import ifsp.project.welnessmind.data.db.dao.PatientPasswordDAO
 import ifsp.project.welnessmind.data.db.dao.ProfessionalDAO
 import ifsp.project.welnessmind.data.db.dao.ProfessionalPasswordDAO
 import ifsp.project.welnessmind.data.db.entity.FormsEntity
+import ifsp.project.welnessmind.data.db.entity.OfficeLocationEntity
 import ifsp.project.welnessmind.data.db.entity.PatientEntity
 import ifsp.project.welnessmind.data.db.entity.PatientPassword
-import ifsp.project.welnessmind.data.db.entity.ProfessionalPassword
 import ifsp.project.welnessmind.data.db.entity.ProfessionalEntity
+import ifsp.project.welnessmind.data.db.entity.ProfessionalPassword
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.internal.synchronized
 
-@Database(entities = [PatientEntity::class, ProfessionalEntity::class, FormsEntity::class, PatientPassword::class, ProfessionalPassword::class], version = 6,
+@Database(entities = [
+    PatientEntity::class,
+    ProfessionalEntity::class,
+    FormsEntity::class,
+    PatientPassword::class,
+    ProfessionalPassword::class,
+    OfficeLocationEntity::class], version = 8,
     autoMigrations = [
-        AutoMigration (from = 5, to = 6, spec = AppDatabase.AutoMigration::class)
+        AutoMigration (from = 7, to = 8, spec = AppDatabase.AutoMigration::class)
     ])
 abstract class AppDatabase : RoomDatabase() {
-    @DeleteTable(tableName = "user_password")
     class AutoMigration : AutoMigrationSpec
 
     abstract val patientDao: PatientDAO
@@ -39,6 +39,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract val formsDao: FormsDAO
     abstract val patientPasswordDao: PatientPasswordDAO
     abstract val professionalPasswordDao: ProfessionalPasswordDAO
+    abstract val officeLocationDao: OfficeLocationDAO
 
     companion object { // Usado para definir membros estáticos dentro da classe AppDatabase. Esses membros são compartilhados entre todas as instâncias da classe.
         @Volatile // Indica que a variável INSTANCE (abaixo) pode ser modificada por diferentes threads e garante que todas as threads vejam a mesma versão dessa variável. Isso é importante para evitar problemas de concorrência.
@@ -56,7 +57,6 @@ abstract class AppDatabase : RoomDatabase() {
                     ).fallbackToDestructiveMigration()
                         .build()
                 }
-
                 return instance
                 }
             }

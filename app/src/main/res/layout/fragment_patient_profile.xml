@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.register.patient.PatientProfileFragment">
+
+    <TextView
+        android:id="@+id/tvGreeting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        tools:text="Olá, [Nome do Usuário]" />
+
+    <ImageView
+        android:id="@+id/iv_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_alignParentEnd="true"
+        android:src="@drawable/ic_info" />
+
+    <TextView
+        android:id="@+id/tv_email"
+        android:layout_marginTop="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_alignTop="@+id/tvGreeting"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        tools:text="email@example"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/tv_cpf"
+        android:layout_marginTop="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_alignTop="@+id/tv_email"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        tools:text="123.456.789-01"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/tv_estado_civil"
+        android:layout_marginTop="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_alignTop="@+id/tv_cpf"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        tools:text="Solteiro(a)"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/tv_idade"
+        android:layout_marginTop="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_alignTop="@+id/tv_estado_civil"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        tools:text="23"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/tv_renda"
+        android:layout_marginTop="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_alignTop="@+id/tv_idade"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        tools:text="Até 2 S.M."
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/tv_escolaridade"
+        android:layout_marginTop="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_alignTop="@+id/tv_renda"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        tools:text="Ensino Médio"
+        android:textSize="18sp"/>
+
+    <Button
+        android:id="@+id/btn_salvar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_salvar"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/button"
+        android:layout_marginEnd="24dp"
+        android:textColor="@color/white"
+        android:layout_marginBottom="12dp"/>
+
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_alignParentBottom="true"
+        android:src="@drawable/ic_delete" />
+
+</RelativeLayout>

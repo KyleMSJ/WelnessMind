@@ -1,4 +1,4 @@
-package ifsp.project.welnessmind.ui.list
+package ifsp.project.welnessmind.ui.register.professional
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

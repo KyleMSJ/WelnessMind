@@ -1,4 +1,4 @@
-package ifsp.project.welnessmind.ui.cadastro
+package ifsp.project.welnessmind.ui.register.forms
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -20,9 +20,9 @@ class FormsViewModel(
 
     private val _messageEventData = MutableLiveData<Int>()
 
-    fun addForms(horasSono: Int, horasEstudo: Int, horasTrabalho: Int, fazAtividadeFisica: Boolean, descricaoAtivFisica: String, frequenciaAtivFisica: String, hobbies: String, tomaMedicamento: Boolean, descricaoMedicamento: String) = viewModelScope.launch {
+    fun addForms(userId: Long, horasSono: Int, horasEstudo: Int, horasTrabalho: Int, fazAtividadeFisica: Boolean, descricaoAtivFisica: String, frequenciaAtivFisica: String, hobbies: String, tomaMedicamento: Boolean, descricaoMedicamento: String) = viewModelScope.launch {
         try {
-            val id = repository.insertForms(horasSono, horasEstudo, horasTrabalho, fazAtividadeFisica, descricaoAtivFisica, frequenciaAtivFisica, hobbies, tomaMedicamento, descricaoMedicamento)
+            val id = repository.insertForms(userId, horasSono, horasEstudo, horasTrabalho, fazAtividadeFisica, descricaoAtivFisica, frequenciaAtivFisica, hobbies, tomaMedicamento, descricaoMedicamento)
             if (id > 0) {
                 _formsStateEventData.value = FormsState.Inserted
             }

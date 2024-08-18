@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <item
+            android:id="@+id/navigation_consultas"
+            android:icon="@drawable/calendar"
+            android:title="@string/nav_consultas" />
+        <item
+            android:id="@+id/navigation_formulario"
+            android:icon="@drawable/forms"
+            android:title="@string/nav_forms" />
+        <item
+            android:id="@+id/navigation_dados"
+            android:icon="@drawable/profile"
+            android:title="@string/nav_profile" />
+        <item
+            android:id="@+id/navigation_profissionais"
+            android:icon="@drawable/list"
+            android:title="@string/nav_professionalsList" />
+</menu>

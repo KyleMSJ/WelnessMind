@@ -11,6 +11,6 @@ interface ProfessionalPasswordDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(professionalPassword: ProfessionalPassword): Long
 
-    @Query("SELECT * FROM patient_password WHERE id = :id LIMIT 1")
+    @Query("SELECT * FROM professional_password WHERE id = :id LIMIT 1")
     suspend fun getPasswordByUserId(id: Long): ProfessionalPassword?
 }

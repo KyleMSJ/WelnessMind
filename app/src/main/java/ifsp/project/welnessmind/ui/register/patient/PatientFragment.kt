@@ -1,6 +1,7 @@
-package ifsp.project.welnessmind.ui.cadastro.fragments
+package ifsp.project.welnessmind.ui.register.patient
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.FirebaseDatabase
 import ifsp.project.welnessmind.R
 import ifsp.project.welnessmind.data.db.AppDatabase
 import ifsp.project.welnessmind.data.db.dao.PatientDAO
@@ -21,7 +23,7 @@ import ifsp.project.welnessmind.data.repository.PatientRepository
 import ifsp.project.welnessmind.databinding.FragmentPatientBinding
 import ifsp.project.welnessmind.domain.PatientUseCase
 import ifsp.project.welnessmind.extension.hideKeyboard
-import ifsp.project.welnessmind.ui.cadastro.PatientViewModel
+import java.lang.NumberFormatException
 
 class PatientFragment : Fragment() {
 
@@ -42,8 +44,9 @@ class PatientFragment : Fragment() {
                 val patientDAO: PatientDAO =
                     AppDatabase.getInstance(requireContext()).patientDao
 
-                val  repository: PatientRepository = PatientUseCase(patientDAO)
-                return PatientViewModel(repository) as T
+              val firebaseDatabase = FirebaseDatabase.getInstance()
+              val  repository: PatientRepository = PatientUseCase(patientDAO, firebaseDatabase)
+              return PatientViewModel(repository) as T
             }
         }
     }
@@ -79,25 +82,25 @@ class PatientFragment : Fragment() {
         etIdade = binding.userIdade
 
         radioButtonState = listOf(
-            binding.rbSolteiro,
-            binding.rbCasado,
-            binding.rbSeparado,
-            binding.rbDivorciado,
-            binding.rbViuvo
+            binding.rbSolteiro, // 0
+            binding.rbCasado, // 1
+            binding.rbSeparado, // 2
+            binding.rbDivorciado, // 3
+            binding.rbViuvo // 4
         )
 
         radioButtonRenda = listOf(
-            binding.rbRenda1,
-            binding.rbRenda2,
-            binding.rbRenda3,
-            binding.rbRenda4
+            binding.rbRenda1, // Até 2. S.M.
+            binding.rbRenda2, // De 2 a 4 S.M.
+            binding.rbRenda3, // De 4 a 7 S.M.
+            binding.rbRenda4 // + 7 S.M.
         )
 
         radioButtonEscolaridade = listOf(
-            binding.rbEscolaridade1,
-            binding.rbEscolaridade2,
-            binding.rbEscolaridade3,
-            binding.rbEscolaridade4
+            binding.rbEscolaridade1, // Ensino Fundamental
+            binding.rbEscolaridade2, // Ensino Médio
+            binding.rbEscolaridade3, // Ensino Superior
+            binding.rbEscolaridade4 // Pós-graduação
         )
     }
 
@@ -133,6 +136,7 @@ class PatientFragment : Fragment() {
                     hideKeyboard()
                     requireView().requestFocus()
                 }
+                else -> {}
             }
         }
     }
@@ -158,7 +162,7 @@ class PatientFragment : Fragment() {
             val name = etNome.text.toString()
             val email = etEmail.text.toString()
             val cpf = etCPF.text.toString()
-            val idade = etIdade.text.toString().toInt()
+            val idadeText = etIdade.text.toString()
             val maritalStatus = getSelectedIndex(radioButtonState)
             val income = getSelectedIndex(radioButtonRenda)
             val education = getSelectedIndex(radioButtonEscolaridade)
@@ -167,23 +171,31 @@ class PatientFragment : Fragment() {
                     !radioButtonState.any { it.isChecked } || !radioButtonRenda.any { it.isChecked } || !radioButtonEscolaridade.any { it.isChecked }
                 ) {
                     Snackbar.make(view, "Preencha todas as informações", Snackbar.LENGTH_SHORT).show()
-                } else {
-                    viewModel.addPatient(name, email, cpf, idade, maritalStatus, income, education, requireContext()) { userId ->
-                        showSuccessPopup(userId)
-                    }
+                    return@setOnClickListener
                 }
+
+            val idade = try {
+                idadeText.toInt()
+            } catch (e: NumberFormatException) {
+                Snackbar.make(view, "Idade Inválida. Por favor, insira um número", Snackbar.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            viewModel.addPatient(name, email, cpf, idade, maritalStatus, income, education, requireContext()) { userId ->
+                showSuccessPopup(userId)
+            }
         }
     }
 
     private fun showSuccessPopup(userId: Long) {
         val builder = AlertDialog.Builder(requireContext())
         builder.setTitle("Sucesso")
-        builder.setMessage("Cadastro realizado com sucesso! ID: $userId")
+        builder.setMessage("Cadastro realizado com sucesso!")
+        Log.d("PatientFragment", "ID: $userId")
         builder.setPositiveButton("OK") { dialog, _ ->
             dialog.dismiss()
             val bundle = Bundle().apply {
-                putBoolean("isFromSignup", true)
                 putString("userType", "PACIENTE")
+                putBoolean("isFromSignup", true)
             }
             findNavController().navigate(R.id.action_patientFragment_to_loginFragment, bundle)
         }

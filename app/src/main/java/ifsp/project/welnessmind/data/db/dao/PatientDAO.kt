@@ -19,7 +19,7 @@ interface PatientDAO {
     fun getAll(): LiveData<List<PatientEntity>>
 
     @Update
-    fun update(patient: PatientEntity)
+    suspend fun update(patient: PatientEntity)
     @Query("DELETE FROM patient WHERE id = :id")
     suspend fun delete(id: Long)
     @Query("DELETE FROM patient")

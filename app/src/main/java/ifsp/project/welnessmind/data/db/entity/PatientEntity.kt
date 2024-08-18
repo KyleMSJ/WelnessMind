@@ -6,12 +6,14 @@ import ifsp.project.welnessmind.data.db.entity.Pessoa
 
 @Entity(tableName = "patient")
 data class PatientEntity(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
-    override var name: String,
-    override var email: String,
-    val cpf: String,
-    val idade: Int,
-    val estadoCivil: Int,
-    val rendaFamiliar: Int,
-    val escolaridade: Int
-) : Pessoa(name = "Patient_name", email = "Patient_email")
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
+    override var name: String = "",
+    override var email: String = "",
+    var cpf: String = "",
+    var idade: Int = 0,
+    var estadoCivil: Int = 0,
+    var rendaFamiliar: Int = 0,
+    var escolaridade: Int = 0
+) : Pessoa(name = "Patient_name", email = "Patient_email") {
+    constructor() : this(0, "", "", "", 0, 0,0,0)
+}

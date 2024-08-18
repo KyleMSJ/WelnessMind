@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
+    id("com.google.gms.google-services")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
@@ -69,6 +70,20 @@ implementation("androidx.annotation:annotation:1.8.0")
     val roomVersion = "2.6.1"
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-testing:$roomVersion")
+
+    // Firebase
+    implementation(platform("com.google.firebase:firebase-bom:33.1.2"))
+    implementation ("com.google.firebase:firebase-firestore-ktx")
+    implementation("com.google.firebase:firebase-database")
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.firebase:firebase-storage-ktx")
+//    implementation("com.google.firebase:firebase-analytics")
+    // Firebase UI Library
+//    implementation("com.firebaseui:firebase-ui-auth:8.0.2")
+//    implementation("com.firebaseui:firebase-ui-database:8.0.2")
+    // Google Sign In SDK
+//    implementation("com.google.android.gms:play-services-auth:20.5.0")
+
     // To use Kotlin annotation processing tool (kapt)
     kapt("androidx.room:room-compiler:$roomVersion")
     implementation ("androidx.room:room-ktx:$roomVersion")
@@ -83,13 +98,12 @@ implementation("androidx.annotation:annotation:1.8.0")
     implementation("androidx.navigation:navigation-fragment-ktx:$nvgVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$nvgVersion")
 
-    implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
-
 // API Google
     implementation ("com.google.android.gms:play-services-maps:19.0.0")
 //    implementation ("com.google.api-client:google-api-client-android:1.30.10")
 
     implementation("androidx.core:core-ktx:1.13.1")
+    implementation ("org.jetbrains.kotlin:kotlin-stdlib:1.9.0")
     implementation("androidx.appcompat:appcompat:1.7.0")
     implementation("com.google.android.material:material:1.12.0")
 

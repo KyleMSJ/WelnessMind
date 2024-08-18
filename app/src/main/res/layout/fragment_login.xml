@@ -9,6 +9,15 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/iv_info"
+            android:layout_margin="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_info"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
             android:id="@+id/logo"
             android:layout_width="165dp"
             android:layout_height="144dp"

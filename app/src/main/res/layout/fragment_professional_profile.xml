@@ -12,8 +12,10 @@
         android:padding="10dp"
         android:textColor="@color/white"
         android:text="@string/marcar_consulta"
+        android:textStyle="bold"
         android:layout_gravity="end"
         android:layout_marginEnd="40dp"
+        android:onClick="marcarConsulta"
         android:layout_marginTop="40dp" />
 
     <LinearLayout
@@ -60,6 +62,6 @@
         android:layout_height="300dp"
         android:layout_marginBottom="36dp"
         android:layout_gravity="center|bottom"
-        tools:context=".ui.list.ProfessionalProfileFragment" />
+        tools:context=".ui.register.professional.ProfessionalProfileFragment" />
 
 </FrameLayout>

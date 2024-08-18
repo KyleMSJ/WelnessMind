@@ -1,4 +1,4 @@
-package ifsp.project.welnessmind.ui.cadastro.fragments
+package ifsp.project.welnessmind.ui.register
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,7 +10,6 @@ import ifsp.project.welnessmind.R
 import ifsp.project.welnessmind.databinding.FragmentConditionalBinding
 
 class ConditionalFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var _binding: FragmentConditionalBinding? = null
     private val binding get() = _binding!!
 

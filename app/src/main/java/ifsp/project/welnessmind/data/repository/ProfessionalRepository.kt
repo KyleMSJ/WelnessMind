@@ -1,6 +1,7 @@
 package ifsp.project.welnessmind.data.repository
 
 import androidx.lifecycle.LiveData
+import ifsp.project.welnessmind.data.db.entity.OfficeLocationEntity
 import ifsp.project.welnessmind.data.db.entity.ProfessionalEntity
 
 interface ProfessionalRepository {
@@ -11,4 +12,6 @@ interface ProfessionalRepository {
     suspend fun  updateProfessional(id: Long, name: String, email: String, credenciais: String, especialidade: String)
     suspend fun deleteProfessional(id: Long)
     suspend fun deleteAllProfessionals()
+    suspend fun saveOfficeLocation(location: OfficeLocationEntity)
+    suspend fun getOfficeLocation(professionalId: Long): OfficeLocationEntity?
 }

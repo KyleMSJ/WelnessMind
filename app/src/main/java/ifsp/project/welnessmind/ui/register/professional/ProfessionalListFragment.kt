@@ -1,6 +1,5 @@
-package ifsp.project.welnessmind.ui.cadastro.fragments
+package ifsp.project.welnessmind.ui.register.professional
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,14 +9,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.database.FirebaseDatabase
 import ifsp.project.welnessmind.R
 import ifsp.project.welnessmind.data.db.AppDatabase
+import ifsp.project.welnessmind.data.db.dao.OfficeLocationDAO
 import ifsp.project.welnessmind.data.repository.ProfessionalRepository
 import ifsp.project.welnessmind.databinding.FragmentProfessionalListBinding
 import ifsp.project.welnessmind.domain.ProfessionalUseCase
-import ifsp.project.welnessmind.ui.list.ProfessionalListAdapter
-import ifsp.project.welnessmind.ui.list.ProfessionalListViewModel
-import ifsp.project.welnessmind.ui.list.ProfessionalProfileFragment
 
 class ProfessionalListFragment : Fragment(R.layout.fragment_professional_list) {
 
@@ -29,8 +27,9 @@ class ProfessionalListFragment : Fragment(R.layout.fragment_professional_list) {
             override fun <T: ViewModel> create(modelClass: Class<T>): T {
                 val professionalDAO =
                     AppDatabase.getInstance(requireContext()).professionalDao
-
-                val repository: ProfessionalRepository = ProfessionalUseCase(professionalDAO)
+                val officeLocationDAO: OfficeLocationDAO = AppDatabase.getInstance(requireContext()).officeLocationDao
+                val firebaseDatabase = FirebaseDatabase.getInstance()
+                val repository: ProfessionalRepository = ProfessionalUseCase(professionalDAO, officeLocationDAO, firebaseDatabase)
                 return ProfessionalListViewModel(repository) as T
             }
 
@@ -48,6 +47,9 @@ class ProfessionalListFragment : Fragment(R.layout.fragment_professional_list) {
         super.onViewCreated(view, savedInstanceState)
         observeViewModelEvents()
 
+        binding.icHome.setOnClickListener {
+            findNavController().navigate(R.id.action_professionalListFragment_to_patientProfileFragment)
+        }
     }
 
     private fun observeViewModelEvents() {

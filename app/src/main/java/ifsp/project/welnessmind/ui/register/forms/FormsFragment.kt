@@ -1,20 +1,20 @@
-package ifsp.project.welnessmind.ui.cadastro.fragments
+package ifsp.project.welnessmind.ui.register.forms
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.RadioButton
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.FirebaseDatabase
 import ifsp.project.welnessmind.R
 import ifsp.project.welnessmind.data.db.AppDatabase
 import ifsp.project.welnessmind.data.db.dao.FormsDAO
@@ -22,7 +22,7 @@ import ifsp.project.welnessmind.data.repository.FormsRepository
 import ifsp.project.welnessmind.databinding.FragmentFormsBinding
 import ifsp.project.welnessmind.domain.FormsUseCase
 import ifsp.project.welnessmind.extension.hideKeyboard
-import ifsp.project.welnessmind.ui.cadastro.FormsViewModel
+import java.lang.IllegalArgumentException
 
 class FormsFragment : Fragment() {
 
@@ -45,7 +45,8 @@ class FormsFragment : Fragment() {
                 val formsDAO: FormsDAO =
                     AppDatabase.getInstance(requireContext()).formsDao
 
-                val repository: FormsRepository = FormsUseCase(formsDAO)
+                val firebaseDatabase = FirebaseDatabase.getInstance()
+                val repository: FormsRepository = FormsUseCase(formsDAO, firebaseDatabase)
                 return FormsViewModel(repository) as T
             }
         }
@@ -129,11 +130,14 @@ class FormsFragment : Fragment() {
             val treina = OpcaoSimSelecionada(radioButtonTreino)
             val tomaMed = OpcaoSimSelecionada(radioButtonMedicamento)
 
+            val userId = arguments?.getLong("userID") ?: throw IllegalArgumentException("UserId é necessário!")
+            Log.d("FormsFragment","User ID encontrado: $userId")
+
             if (horasSono.text.isNullOrEmpty() || horasEstudo.text.isNullOrEmpty() || horasTrabalho.text.isNullOrEmpty() || !radioButtonTreino.any { it.isChecked } || !radioButtonMedicamento.any{ it.isChecked })
             {
                 Snackbar.make(view, "Os campos com asterisco são obrigatórios!", Snackbar.LENGTH_SHORT).show()
             } else {
-                viewModel.addForms(sono, estudo, trabalho, treina, descTreino, freqTreino, hobbies, tomaMed, descMed)
+                viewModel.addForms(userId, sono, estudo, trabalho, treina, descTreino, freqTreino, hobbies, tomaMed, descMed)
                 findNavController().navigate(R.id.action_formsFragment_to_professionalListFragment)
             }
         }

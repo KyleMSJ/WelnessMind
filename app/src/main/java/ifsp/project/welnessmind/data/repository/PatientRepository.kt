@@ -8,6 +8,7 @@ interface PatientRepository  // O 'Repository': Abstrai a origem dos dados, forn
 {
     suspend fun insertPatient(name: String, email: String, cpf: String, idade: Int, estadoCivil: Int, rendaFamiliar: Int, escolaridade: Int): Long // 'suspend' - usada para execuções assíncronas sem interromper a thread principal (melhor performance e responsividade na UI)
     fun  getAllPatients(): LiveData<List<PatientEntity>>
+    suspend fun getPatientById(id: Long): PatientEntity?
     suspend fun  updatePatient(id: Long, name: String, email: String, cpf: String, idade: Int, estadoCivil: Int, rendaFamiliar: Int, escolaridade: Int)
     suspend fun deletePatient(id: Long)
     suspend fun deleteAllPatients()

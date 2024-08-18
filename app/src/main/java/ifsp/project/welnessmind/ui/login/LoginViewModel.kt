@@ -1,13 +1,13 @@
 package ifsp.project.welnessmind.ui.login
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import ifsp.project.welnessmind.data.repository.UserRepository
-
 import ifsp.project.welnessmind.R
+import ifsp.project.welnessmind.data.repository.UserRepository
 import kotlinx.coroutines.launch
 
 class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {
@@ -17,7 +17,6 @@ class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {
 
     private val _loginResult = MutableLiveData<LoginResult>()
     val loginResult: LiveData<LoginResult> = _loginResult
-
 
     fun generatePasswordForUserId(userId: Long, userType: UserType) {
         viewModelScope.launch {
@@ -36,11 +35,11 @@ class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {
         }
     }
 
-    fun login(username: String, password: String, userType: UserType) {
+    fun login(context: Context, username: String, password: String, userType: UserType) {
         viewModelScope.launch {
             Log.d("LoginViewModel", "Attempting login for username: $username, userType: $userType")
             val result = when (userType) {
-                UserType.PACIENTE -> userRepository.loginPatient(username, password)
+                UserType.PACIENTE -> userRepository.loginPatient(context, username, password)
                 UserType.PROFISSIONAL -> userRepository.loginProfessional(username, password)
             }
             Log.d("LoginViewModel", "Login result: $result")
@@ -56,6 +55,7 @@ class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {
                     _loginResult.value = LoginResult(error = errorMessage)
                 }
             }
+
         }
     }
 

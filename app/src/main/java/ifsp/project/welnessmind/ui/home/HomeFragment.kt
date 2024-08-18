@@ -1,4 +1,4 @@
-package ifsp.project.welnessmind.ui.cadastro.fragments
+package ifsp.project.welnessmind.ui.home
 
 import android.content.Context
 import android.os.Bundle
@@ -8,14 +8,25 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.database.FirebaseDatabase
 import ifsp.project.welnessmind.R
+import ifsp.project.welnessmind.data.db.AppDatabase
+import ifsp.project.welnessmind.data.repository.SyncRepository
 import ifsp.project.welnessmind.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val TAG = "HomeFragment"
+
+    private val viewModel: HomeViewModel by viewModels {
+        val professionalDao = AppDatabase.getInstance(requireContext()).professionalDao
+        val patientDao = AppDatabase.getInstance(requireContext()).patientDao
+        val firebaseDatabase = FirebaseDatabase.getInstance()
+        HomeViewModelFactory(SyncRepository(professionalDao, patientDao, firebaseDatabase))
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,6 +46,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.syncData()
 
         binding.btnCadastro.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_conditionalFragment)
@@ -42,8 +54,9 @@ class HomeFragment : Fragment() {
 
         binding.btnLogin.setOnClickListener {
             val bundle = Bundle()
-            bundle.putString("userType", "PACIENTE")
-
+            bundle.apply {
+                putString("userType", "PACIENTE")
+            }
             findNavController().navigate(R.id.action_homeFragment_to_loginFragment, bundle)
         }
     }

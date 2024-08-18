@@ -96,6 +96,23 @@
     <string name="registerPaciente">Cadastro Paciente</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="info_register_office">Clique no mapa para selecionar a localização do consultório</string>
+    <string name="info_register_office">Clique no mapa ou digite no campo abaixo para selecionar a localização do consultório</string>
+    <string name="office_note">Aqui você pode cadastrar o \nconsultório no qual trabalha,\ncolocar uma descrição, e\nregistrar informações para \ncontato</string>
+    <string name="tv_office_description">descrição</string>
+    <string name="tv_contato">Contato:</string>
+    <string name="hint_contato">*Essa informação será exibida aos pacientes</string>
+    <string name="app_logo">App Logo</string>
+    <string name="office_register">Registro de consultório</string>
+    <string name="location_saved_successfully">Localização salva com sucesso</string>
+    <string name="location_error_to_save">Ocorreu um erro ao salvar a localização</string>
+    <string name="location_error_to_fetch">Ocorreu um erro ao buscar o endereço</string>
+    <string name="hint_insert_address">Insira o endereço</string>
+    <string name="professionalProfile">Perfil do Profissional</string>
+    <string name="nav_consultas">Consultas</string>
+    <string name="nav_forms">Formulário</string>
+    <string name="nav_profile">Perfil</string>
+    <string name="nav_professionalsList">Profissionais</string>
+    <string name="btn_salvar">Salvar</string>
+    <string name="user_home">Perfil do usuário</string>
 
 </resources>

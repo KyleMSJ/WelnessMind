@@ -8,14 +8,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import ifsp.project.welnessmind.R
 import ifsp.project.welnessmind.data.db.AppDatabase
 import ifsp.project.welnessmind.databinding.FragmentLoginBinding
@@ -27,6 +26,7 @@ class LoginFragment : Fragment() {
 
     private lateinit var loginViewModel: LoginViewModel
     private var _binding: FragmentLoginBinding? = null
+    private lateinit var auth: FirebaseAuth
 
     private val binding get() = _binding!!
 
@@ -39,6 +39,7 @@ class LoginFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        auth = Firebase.auth
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -60,6 +61,7 @@ class LoginFragment : Fragment() {
         val passwordEditText = binding.password
         val loginButton = binding.login
         val loadingProgressBar = binding.loading
+        val ic_info = binding.ivInfo
 
         // identifica se veio de uma tela de cadastro
         isFromSignup = arguments?.getBoolean("isFromSignup") ?: false
@@ -71,6 +73,13 @@ class LoginFragment : Fragment() {
                 else -> throw IllegalArgumentException("Tipo de usuário inválido")
             }
 
+        ic_info.setOnClickListener { // em último caso: gerar uma nova senha
+            if (usernameEditText.text.isNullOrEmpty())
+            Toast.makeText(appContext, "Insira seu e-mail e clique novamente para recuperar sua senha", Toast.LENGTH_LONG).show()
+            else {
+                // TODO recuperar a senha pelo e-mail
+            }
+        }
         binding.textCadastrar.setOnClickListener {
             if (userType == UserType.PACIENTE) {
                 findNavController().navigate(R.id.patientFragment)
@@ -90,7 +99,6 @@ class LoginFragment : Fragment() {
             }
         } else {
             Log.e("LoginFragment", "Erro ao recuperar o ID do usuário")
-            Toast.makeText(appContext, "Erro ao recuperar o ID do usuário", Toast.LENGTH_LONG).show()
         }
 
         // Observa as mudanças no estado do formulário de login
@@ -121,13 +129,25 @@ class LoginFragment : Fragment() {
                     loggedInUserView.password?.let { password ->
                         ShowPasswordDialog(password)
                         passwordGenerated = true
+                        ic_info.setOnClickListener {
+                            ShowPasswordDialog(password)
+                        }
                     }
                     if (isLoginAttempted && userType == UserType.PACIENTE) {
                         if (!isFromSignup) {
-                            findNavController().navigate(R.id.action_loginFragment_to_professionalListFragment)
+                            SharedPreferencesUtil.getUserId(appContext)
+                            val bundle = Bundle()
+                            bundle.putLong("userID", userId)
+                            findNavController().navigate(R.id.action_loginFragment_to_professionalListFragment, bundle)
                         } else {
-                            findNavController().navigate(R.id.action_loginFragment_to_formsFragment)
+                            SharedPreferencesUtil.getUserId(appContext)
+                            val bundle = Bundle()
+                            bundle.putLong("userID", userId)
+                            findNavController().navigate(R.id.action_loginFragment_to_formsFragment, bundle)
                         }
+                    }
+                    else if (isLoginAttempted && userType == UserType.PROFISSIONAL) {
+                        findNavController().navigate(R.id.action_loginFragment_to_officeRegisterFragment)
                     }
                 }
                 isLoginAttempted = false
@@ -138,6 +158,7 @@ class LoginFragment : Fragment() {
             isLoginAttempted = true
             Log.d("LoginFragment", "Login button clicked, attempting login")
             loginViewModel.login(
+                appContext,
                 usernameEditText.text.toString(),
                 passwordEditText.text.toString(),
                 userType

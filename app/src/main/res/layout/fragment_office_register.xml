@@ -1,46 +1,171 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
         android:gravity="center_horizontal"
-        android:layout_gravity="bottom"
+        android:orientation="vertical"
         android:padding="16dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="96dp"
+                android:layout_height="96dp"
+                android:layout_gravity="start"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/app_logo"
+                android:src="@drawable/welness_mind_logo" />
+
+            <TextView
+                android:id="@+id/user_header"
+                style="@style/bem_vindo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="54dp"
+                android:text="@string/bem_vindo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/user_header"
+                android:layout_alignParentEnd="true"
+                android:layout_gravity="end"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="30dp"
+                android:shadowColor="#CD000000"
+                android:shadowDx="0"
+                android:shadowDy="4"
+                android:shadowRadius="4"
+                android:text="@string/office_note" />
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tv_selected_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/info_register_office"
-            android:padding="8dp"
+            android:layout_marginTop="36dp"
             android:layout_marginBottom="8dp"
             android:background="@android:color/white"
-            android:elevation="4dp" />
+            android:elevation="4dp"
+            android:padding="8dp"
+            android:text="@string/info_register_office"
+            app:drawableStartCompat="@drawable/ic_pin" />
+
+        <EditText
+            android:id="@+id/et_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/hint_insert_address"
+            android:inputType="text"
+            android:padding="8dp"
+            android:elevation="4dp"
+            android:background="@android:color/white" />
 
         <fragment
             android:id="@+id/map"
             android:name="com.google.android.gms.maps.SupportMapFragment"
             android:layout_width="300dp"
             android:layout_height="300dp"
-            android:layout_marginBottom="36dp"
             android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="36dp"
             tools:context=".ui.register.RegisterOfficeLocationFragment" />
 
-<!--        <Button-->
-<!--            android:id="@+id/btn_save_location"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Salvar Localização"-->
-<!--            android:padding="8dp"-->
-<!--            android:layout_marginTop="8dp"-->
-<!--            android:background="@color/purple_500"-->
-<!--            android:textColor="@android:color/white"-->
-<!--            android:elevation="4dp" />-->
+        <RelativeLayout
+            android:layout_width="300dp"
+            android:layout_height="wrap_content">
+
+            <View
+                android:id="@+id/office_description"
+                android:layout_width="match_parent"
+                android:layout_height="72dp"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentEnd="true"
+                android:background="@drawable/ellipse"
+                android:elevation="4dp" />
+
+            <TextView
+                android:id="@+id/tv_descricao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/office_description"
+                android:layout_alignTop="@+id/office_description"
+                android:layout_alignEnd="@+id/office_description"
+                android:layout_alignBottom="@+id/office_description"
+                android:gravity="center"
+                android:text="@string/tv_office_description"
+                android:textAppearance="@style/info"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/tv_contato"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/office_description"
+                android:layout_marginTop="18dp"
+                android:text="@string/tv_contato" />
+
+            <View
+                android:layout_width="240dp"
+                android:layout_height="20dp"
+                android:layout_below="@+id/office_description"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="18dp"
+                android:layout_toEndOf="@+id/tv_contato"
+                android:background="@drawable/ellipse2"
+                android:elevation="4dp" />
+
+            <TextView
+                android:id="@+id/tv_info_contato"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/office_description"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="19dp"
+                android:layout_toEndOf="@id/tv_contato"
+                android:text="@string/hint_contato"
+                android:textColor="#B3000000"
+                android:textSize="11sp" />
+
+            <View
+                android:id="@+id/ic_edit"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_alignTop="@+id/tv_contato"
+                android:layout_gravity="start"
+                android:layout_marginTop="42dp"
+                android:background="@drawable/editar_icon" />
+
+            <Button
+                android:id="@+id/btn_avancar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/tv_contato"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="36dp"
+                android:background="@drawable/button"
+                android:text="@string/btn_avancar"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
     </LinearLayout>
 </FrameLayout>
+</ScrollView>

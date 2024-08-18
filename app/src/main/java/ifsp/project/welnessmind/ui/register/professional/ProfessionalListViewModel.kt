@@ -1,4 +1,4 @@
-package ifsp.project.welnessmind.ui.list
+package ifsp.project.welnessmind.ui.register.professional
 
 import androidx.lifecycle.ViewModel
 import ifsp.project.welnessmind.data.repository.ProfessionalRepository
