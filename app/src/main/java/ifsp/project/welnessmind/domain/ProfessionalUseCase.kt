@@ -1,5 +1,6 @@
 package ifsp.project.welnessmind.domain
 
+import android.location.Address
 import android.util.Log
 import androidx.lifecycle.LiveData
 import com.google.firebase.database.FirebaseDatabase
@@ -9,6 +10,7 @@ import ifsp.project.welnessmind.data.db.entity.OfficeLocationEntity
 import ifsp.project.welnessmind.data.db.entity.ProfessionalEntity
 import ifsp.project.welnessmind.data.repository.ProfessionalRepository
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 
 class ProfessionalUseCase (
@@ -63,6 +65,14 @@ class ProfessionalUseCase (
         credenciais: String,
         especialidade: String
     ) {
+
+        val professionalRef = FirebaseDatabase.getInstance().getReference("professional").child(id.toString())
+        var existingPassword: String? = null
+
+        professionalRef.child("password").get().addOnSuccessListener { snapshot ->
+            existingPassword = snapshot.getValue(String::class.java)
+        }.await()
+
         val professional = ProfessionalEntity(
             id = id,
             name = name,
@@ -70,8 +80,29 @@ class ProfessionalUseCase (
             credenciais = credenciais,
             especialidade = especialidade
         )
+
+        Log.d(TAG, "Atualizando profissional: $professional")
         professionalDAO.update(professional)
+        Log.d(TAG, "Profissional atualizado no banco de dados local")
         syncProfessionalToFirebase(professional)
+
+        val officeLocationRef = professionalRef.child("office_location")
+        officeLocationDAO.getOfficelocation(id)?.let { officeLocation ->
+            val officeData = mapOf(
+                "id" to officeLocation.id,
+                "professional_id" to officeLocation.professional_id,
+                "address" to officeLocation.address,
+                "latitude" to officeLocation.latitude,
+                "longitude" to officeLocation.longitude,
+                "description" to officeLocation.description,
+                "contact" to officeLocation.contact
+            )
+            officeLocationRef.setValue(officeData)
+            Log.d(TAG, "Localização do consultório atualizada no Firebase: $officeData")
+        }
+
+        Log.d(TAG, "Profissional sincronizado com Firebase")
+        professionalRef.child("password").setValue(existingPassword)
     }
 
     override suspend fun deleteProfessional(id: Long) {
@@ -84,22 +115,5 @@ class ProfessionalUseCase (
         professionalsRef.removeValue()
     }
 
-    override suspend fun saveOfficeLocation(location: OfficeLocationEntity) {
-        officeLocationDAO.insertOfficeLocation(location)
-        syncOfficeLocationToFirebase(location)
-    }
 
-    override suspend fun getOfficeLocation(professionalId: Long): OfficeLocationEntity? {
-        return officeLocationDAO.getOfficelocation(professionalId)
-    }
-
-    private suspend fun syncOfficeLocationToFirebase(location: OfficeLocationEntity) = withContext(Dispatchers.IO) {
-        professionalsRef.child(location.id.toString()).child("office_location").setValue(location)
-            .addOnSuccessListener {
-                Log.d(TAG, "Sincronização do consultório com Firebase feito com sucesso!")
-            }
-            .addOnFailureListener {
-                Log.d(TAG, "Erro ao sincronizar o consultório com Firebase!")
-            }
-    }
 }

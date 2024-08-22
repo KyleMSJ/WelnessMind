@@ -73,8 +73,12 @@ class PatientHomeFragment : Fragment() {
                     true
                 }
                 R.id.navigation_formulario -> {
-                    // TODO criar tela com o formulário já cadastrado para aquele usuário
-                    findNavController().navigate(R.id.formsFragment)
+                    val id = viewModel.getPatientID(requireContext())
+                    val bundle = Bundle().apply {
+                        putLong("userID", id)
+                        putBoolean("userRegistered", true)
+                    }
+                    findNavController().navigate(R.id.formsFragment, bundle)
                     true
                 }
                 R.id.navigation_dados -> {

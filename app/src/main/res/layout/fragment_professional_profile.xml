@@ -8,60 +8,170 @@
         android:id="@+id/btn_consulta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="40dp"
         android:background="@drawable/button"
         android:padding="10dp"
-        android:textColor="@color/white"
         android:text="@string/marcar_consulta"
-        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/ic_calendar"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_gravity="end"
-        android:layout_marginEnd="40dp"
-        android:onClick="marcarConsulta"
-        android:layout_marginTop="40dp" />
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_calendar"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/ic_notes"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="end"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_notes"
+        android:visibility="gone" />
 
     <LinearLayout
-        android:layout_marginTop="144dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="128dp"
+        android:gravity="end"
         android:orientation="vertical"
         android:paddingStart="16dp"
         android:paddingTop="8dp"
         android:paddingEnd="16dp"
-        android:paddingBottom="8dp"
-        android:gravity="end">
+        android:paddingBottom="8dp">
 
-    <TextView
-        android:id="@+id/text_pro_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textStyle="italic"
-        android:layout_marginEnd="24dp"
-        tools:text="Caio Marcelo" />
+        <EditText
+            android:id="@+id/edit_pro_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:visibility="gone"
+            tools:text="Caio Marcelo" />
 
-    <TextView
-        android:id="@+id/text_pro_especialidade"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        tools:text="Psicologia"/>
+        <TextView
+            android:id="@+id/text_pro_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:visibility="visible"
+            tools:text="Caio Marcelo" />
 
-    <TextView
-        android:id="@+id/text_pro_email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="24dp"
-        tools:text="caio.marcelo@contato.com"/>
+        <EditText
+            android:id="@+id/edit_pro_credenciais"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:layout_marginEnd="24dp"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:visibility="gone"
+            tools:text="4461616516" />
+
+        <TextView
+            android:id="@+id/text_pro_crenciais"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:textSize="16sp"
+            android:textStyle="italic"
+            android:visibility="visible"
+            tools:text="4461616516" />
+
+        <EditText
+            android:id="@+id/edit_pro_especialidade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:visibility="gone"
+            tools:text="Psicologia" />
+
+        <TextView
+            android:id="@+id/text_pro_especialidade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:visibility="visible"
+            tools:text="Psicologia" />
+
+        <EditText
+            android:id="@+id/edit_pro_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            android:visibility="gone"
+            tools:text="caio.marcelo@contato.com" />
+
+        <TextView
+            android:id="@+id/text_pro_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            android:visibility="visible"
+            tools:text="caio.marcelo@contato.com" />
+
+
     </LinearLayout>
 
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_marginBottom="36dp"
-        android:layout_gravity="center|bottom"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="80dp"
         tools:context=".ui.register.professional.ProfessionalProfileFragment" />
+
+    <TextView
+        android:id="@+id/tv_descricao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Descricao"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="120dp" />
+
+    <TextView
+        android:id="@+id/tv_info_contato"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text= "Contato"
+        android:layout_gravity="center|bottom"
+        android:layout_marginBottom="90dp" />
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/button"
+        android:padding="10dp"
+        android:text="@string/btn_salvar"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/iv_delete"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="24dp"
+        android:layout_gravity="bottom"
+        android:src="@drawable/ic_delete" />
 
 </FrameLayout>

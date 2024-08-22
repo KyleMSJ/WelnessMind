@@ -167,6 +167,7 @@ class PatientViewModel(
     fun deletePatient(id: Long) {
         viewModelScope.launch {
             repository.deletePatient(id)
+            _patientStateEventData.value = PatientState.Deleted
         }
     }
 

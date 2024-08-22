@@ -1,11 +1,9 @@
 package ifsp.project.welnessmind.domain
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import com.google.firebase.database.FirebaseDatabase
 import ifsp.project.welnessmind.data.db.dao.FormsDAO
 import ifsp.project.welnessmind.data.db.entity.FormsEntity
-import ifsp.project.welnessmind.data.db.entity.PatientEntity
 import ifsp.project.welnessmind.data.repository.FormsRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -23,8 +21,22 @@ class FormsUseCase(
     private suspend fun syncFormsToFirebase(userId: Long, forms: FormsEntity) = withContext(Dispatchers.IO) {
         val formsRef = getFormsRef(userId)
         Log.d("FirebaseSync", "Sincronizando formulário para paciente $userId com dados: $forms")
+
+        val formsData = mapOf(
+            "id" to forms.id,
+            "userId" to forms.userId,
+            "horasSono" to forms.horasSono,
+            "horasEstudo" to forms.horasEstudo,
+            "horasTrabalho" to forms.horasTrabalho,
+            "fazAtividadeFisica" to forms.fazAtividadeFisica,
+            "descricaoAtivFisica" to forms.descricaoAtivFisica,
+            "frequenciaAtivFisica" to forms.frequenciaAtivFisica,
+            "hobbies" to forms.hobbies,
+            "tomaMedicamento" to forms.tomaMedicamento,
+            "descricaoMedicamento" to forms.descricaoMedicamento
+        )
         formsRef.child(forms.id.toString())
-            .setValue(forms)
+            .setValue(formsData)
                 .addOnSuccessListener {
                     Log.d("FirebaseSync", "Formulário sincronizado para o paciente $userId: Form ID ${forms.id}")
                 }
@@ -65,26 +77,29 @@ class FormsUseCase(
         return id
     }
 
-    override fun getAllForms(): LiveData<List<FormsEntity>> {
-        return formsDAO.getAll()
+    override suspend fun getFormsById(id: Long): FormsEntity? {
+        return formsDAO.getFormsByUserId(id)
     }
 
-    override suspend fun updateForms(id: Long, horasSono: Int, horasEstudo: Int, horasTrabalho: Int, fazAtividadeFisica: Boolean, descricaoAtivFisica: String, frequenciaAtivFisica: String, hobbies: String, tomaMedicamento: Boolean, descricaoMedicamento: String) {
-        val forms = FormsEntity(
-            id  = id,
-            horasSono = horasSono,
-            horasTrabalho = horasTrabalho,
-            horasEstudo = horasEstudo,
-            fazAtividadeFisica = fazAtividadeFisica,
-            descricaoAtivFisica = descricaoAtivFisica,
-            frequenciaAtivFisica = frequenciaAtivFisica,
-            hobbies = hobbies,
-            tomaMedicamento = tomaMedicamento,
-            descricaoMedicamento = descricaoMedicamento
-        )
+    override suspend fun updateForms(id: Long, userId: Long, horasSono: Int, horasEstudo: Int, horasTrabalho: Int, fazAtividadeFisica: Boolean, descricaoAtivFisica: String, frequenciaAtivFisica: String, hobbies: String, tomaMedicamento: Boolean, descricaoMedicamento: String) {
+        withContext(Dispatchers.IO) {
+            val forms = FormsEntity(
+                id = id,
+                userId = userId,
+                horasSono = horasSono,
+                horasTrabalho = horasTrabalho,
+                horasEstudo = horasEstudo,
+                fazAtividadeFisica = fazAtividadeFisica,
+                descricaoAtivFisica = descricaoAtivFisica,
+                frequenciaAtivFisica = frequenciaAtivFisica,
+                hobbies = hobbies,
+                tomaMedicamento = tomaMedicamento,
+                descricaoMedicamento = descricaoMedicamento
+            )
 
-        formsDAO.update(forms)
-        syncFormsToFirebase(userId = id, forms = forms)
+            formsDAO.update(forms)
+            syncFormsToFirebase(userId = id, forms = forms)
+        }
     }
 
     override suspend fun deleteForms(id: Long) {

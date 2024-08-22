@@ -15,6 +15,7 @@ import ifsp.project.welnessmind.data.db.entity.PatientPassword
 import ifsp.project.welnessmind.data.db.entity.ProfessionalEntity
 import ifsp.project.welnessmind.data.db.entity.ProfessionalPassword
 import ifsp.project.welnessmind.ui.login.LoggedInUser
+import ifsp.project.welnessmind.ui.login.LoginViewModel
 import ifsp.project.welnessmind.util.SharedPreferencesUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
@@ -126,7 +127,7 @@ class UserRepository(
                 Log.e(TAG, "Erro ao buscar senha no Firebase: ${e.message}")
                 return@withContext Result.Error(Exception("Erro ao buscar senha no Firebase"))
             }
-            Log.d(TAG, "Senha armazenada para o usuário $username: $storedPassword")
+            Log.d(TAG, "Senha armazenada para o usuário: $username: $storedPassword")
 
             return@withContext if (storedPassword == password) {
                 loggedInUser = LoggedInUser(patient.id, patient.name)
@@ -138,12 +139,12 @@ class UserRepository(
         }
     }
 
-    suspend fun loginProfessional(username: String, password: String): Result<ProfessionalEntity> {
+    suspend fun loginProfessional(context: Context, username: String, password: String): Result<ProfessionalEntity> {
         return withContext(Dispatchers.IO) {
             val professional = professionalDao.getProfessionalByEmail(username)
                 ?: return@withContext Result.Error(Exception("Usuário não encontrado"))
-            Log.d(TAG, "patient value: $professional")
-
+            Log.d(TAG, "professional value: $professional")
+            SharedPreferencesUtil.saveUserId(context, professional.id)
             var storedPassword = professionalPasswordDao.getPasswordByUserId(professional.id)?.password
 
             if (storedPassword == null) {
@@ -176,7 +177,7 @@ class UserRepository(
                     return@withContext Result.Error(Exception("Erro ao buscar senha no Firebase"))
                 }
             }
-            Log.d(TAG, "Stored password for professional $username: $storedPassword")
+            Log.d(TAG, "Senha armazenada para o profissional: $username: $storedPassword")
 
             return@withContext if (storedPassword == password) {
                 loggedInUser = LoggedInUser(professional.id, professional.name)
@@ -188,7 +189,55 @@ class UserRepository(
         }
     }
 
-private fun generateRandomPassword(): String {
+    suspend fun retrievePasswordByEmail(username: String, userType: LoginViewModel.UserType): String? {
+        return withContext(Dispatchers.IO) {
+            try {
+                val storedPassword = when (userType) {
+                    LoginViewModel.UserType.PACIENTE -> {
+                        val patient = patientDao.getPatientByEmail(username)
+                            ?: return@withContext null
+
+                        var password = patientPasswordDao.getPasswordByUserId(patient.id)?.password
+
+                        if (password == null) {
+                            val passwordRef = FirebaseDatabase.getInstance().reference
+                                .child("patient")
+                                .child(patient.id.toString())
+                                .child("password")
+
+                            password = passwordRef.get().await().getValue(String::class.java)
+                        }
+                        password
+                    }
+                    LoginViewModel.UserType.PROFISSIONAL -> {
+                        val professional = professionalDao.getProfessionalByEmail(username)
+                            ?: return@withContext null
+
+                        var password = professionalPasswordDao.getPasswordByUserId(professional.id)?.password
+
+                        if (password == null) {
+                            val passwordRef = FirebaseDatabase.getInstance().reference
+                                .child("professional")
+                                .child(professional.id.toString())
+                                .child("password")
+
+                            password = passwordRef.get().await().getValue(String::class.java)
+                        }
+                        password
+                    }
+                }
+
+                storedPassword
+            } catch (e: Exception) {
+                Log.e(TAG, "Erro ao buscar senha no Firebase: ${e.message}")
+                null
+            }
+        }
+    }
+
+
+
+    private fun generateRandomPassword(): String {
     val allowedChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
     return (1..5)
         .map { allowedChars.random() }

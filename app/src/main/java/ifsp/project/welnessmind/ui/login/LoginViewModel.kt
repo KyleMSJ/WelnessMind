@@ -40,7 +40,7 @@ class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {
             Log.d("LoginViewModel", "Attempting login for username: $username, userType: $userType")
             val result = when (userType) {
                 UserType.PACIENTE -> userRepository.loginPatient(context, username, password)
-                UserType.PROFISSIONAL -> userRepository.loginProfessional(username, password)
+                UserType.PROFISSIONAL -> userRepository.loginProfessional(context, username, password)
             }
             Log.d("LoginViewModel", "Login result: $result")
             when (result) {
@@ -55,7 +55,16 @@ class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {
                     _loginResult.value = LoginResult(error = errorMessage)
                 }
             }
+        }
+    }
 
+    fun retrievePassword(username: String, userType: UserType, callback: (String?) -> Unit) {
+        viewModelScope.launch {
+            val password = when (userType) {
+                UserType.PACIENTE -> userRepository.retrievePasswordByEmail(username, userType)
+                UserType.PROFISSIONAL -> userRepository.retrievePasswordByEmail(username, userType)
+            }
+            callback(password)
         }
     }
 

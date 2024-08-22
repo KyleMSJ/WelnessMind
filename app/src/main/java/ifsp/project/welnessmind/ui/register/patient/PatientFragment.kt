@@ -174,12 +174,8 @@ class PatientFragment : Fragment() {
                     return@setOnClickListener
                 }
 
-            val idade = try {
-                idadeText.toInt()
-            } catch (e: NumberFormatException) {
-                Snackbar.make(view, "Idade Inválida. Por favor, insira um número", Snackbar.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
+            val idade = idadeText.toInt()
+
             viewModel.addPatient(name, email, cpf, idade, maritalStatus, income, education, requireContext()) { userId ->
                 showSuccessPopup(userId)
             }

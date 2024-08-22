@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -67,17 +68,27 @@ class LoginFragment : Fragment() {
         isFromSignup = arguments?.getBoolean("isFromSignup") ?: false
         // Identificar o tipo de usuário a partir dos argumentos passados para o fragmento
             val userId = SharedPreferencesUtil.getUserId(requireContext())
+            val professionalId = SharedPreferencesUtil.getUserId(requireContext())
             val userType = when (arguments?.getString("userType")) {
                 "PACIENTE" -> UserType.PACIENTE
                 "PROFISSIONAL" -> UserType.PROFISSIONAL
                 else -> throw IllegalArgumentException("Tipo de usuário inválido")
             }
 
-        ic_info.setOnClickListener { // em último caso: gerar uma nova senha
+        ic_info.setOnClickListener {
             if (usernameEditText.text.isNullOrEmpty())
-            Toast.makeText(appContext, "Insira seu e-mail e clique novamente para recuperar sua senha", Toast.LENGTH_LONG).show()
+            Snackbar.make(view, "Insira seu e-mail e clique novamente para recuperar\n sua senha", Snackbar.LENGTH_LONG).show()
             else {
-                // TODO recuperar a senha pelo e-mail
+                loginViewModel.retrievePassword(
+                    usernameEditText.text.toString(),
+                    userType
+                ) { password ->
+                    if (password != null) {
+                        Toast.makeText(appContext, "Sua senha é: $password", Toast.LENGTH_LONG).show()
+                    } else {
+                        Toast.makeText(appContext, "Senha não encontrada", Toast.LENGTH_LONG).show()
+                    }
+                }
             }
         }
         binding.textCadastrar.setOnClickListener {
@@ -147,7 +158,18 @@ class LoginFragment : Fragment() {
                         }
                     }
                     else if (isLoginAttempted && userType == UserType.PROFISSIONAL) {
-                        findNavController().navigate(R.id.action_loginFragment_to_officeRegisterFragment)
+                        SharedPreferencesUtil.getUserId(appContext)
+                        val bundle = Bundle()
+                        bundle.putLong("professional_id", professionalId)
+                        if (!isFromSignup) {
+                            SharedPreferencesUtil.getUserId(appContext)
+                            val bundle = Bundle()
+                            bundle.putLong("professional_id", professionalId)
+                            bundle.putBoolean("isProfessionalMode", true)
+                            findNavController().navigate(R.id.action_loginFragment_to_professionalProfileFragment, bundle)
+                        } else {
+                            findNavController().navigate(R.id.action_loginFragment_to_officeRegisterFragment, bundle)
+                        }
                     }
                 }
                 isLoginAttempted = false

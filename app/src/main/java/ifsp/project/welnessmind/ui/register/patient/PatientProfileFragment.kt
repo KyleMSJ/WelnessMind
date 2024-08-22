@@ -54,7 +54,6 @@ class PatientProfileFragment : Fragment() {
             viewModel.loadUserInfo(requireContext()) { patientID ->
                 showWarningDialog(patientID)
             }
-
         }
         readUserData()
         updateUserData()

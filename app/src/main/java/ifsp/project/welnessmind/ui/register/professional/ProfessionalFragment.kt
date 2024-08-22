@@ -18,10 +18,14 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.FirebaseDatabase
 import ifsp.project.welnessmind.R
 import ifsp.project.welnessmind.data.db.AppDatabase
+import ifsp.project.welnessmind.data.db.dao.FormsDAO
 import ifsp.project.welnessmind.data.db.dao.OfficeLocationDAO
 import ifsp.project.welnessmind.data.db.dao.ProfessionalDAO
+import ifsp.project.welnessmind.data.repository.OfficeRepository
 import ifsp.project.welnessmind.data.repository.ProfessionalRepository
+import ifsp.project.welnessmind.data.repository.SyncRepository
 import ifsp.project.welnessmind.databinding.FragmentProfessionalBinding
+import ifsp.project.welnessmind.domain.OfficeUseCase
 import ifsp.project.welnessmind.domain.ProfessionalUseCase
 import ifsp.project.welnessmind.extension.hideKeyboard
 
@@ -43,10 +47,12 @@ private var _binding: FragmentProfessionalBinding? = null
                 val professionalDAO: ProfessionalDAO =
                     AppDatabase.getInstance(requireContext()).professionalDao
                 val officeLocationDAO: OfficeLocationDAO = AppDatabase.getInstance(requireContext()).officeLocationDao
-
+                val formsDAO: FormsDAO = AppDatabase.getInstance(requireContext()).formsDao
                 val firebaseDatabase = FirebaseDatabase.getInstance()
                 val repository: ProfessionalRepository = ProfessionalUseCase(professionalDAO, officeLocationDAO, firebaseDatabase)
-                return ProfessionalViewModel(repository) as T
+                val officeRepository: OfficeRepository = OfficeUseCase(officeLocationDAO, firebaseDatabase)
+                val syncRepository = SyncRepository(null, professionalDAO, formsDAO, officeLocationDAO, firebaseDatabase)
+                return ProfessionalViewModel(repository, officeRepository, syncRepository) as T
             }
         }
     }
@@ -89,6 +95,7 @@ private var _binding: FragmentProfessionalBinding? = null
                     hideKeyboard()
                     requireView().requestFocus()
                 }
+                else -> {}
             }
         }
 

@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ifsp.project.welnessmind.data.repository.PatientRepository
+import ifsp.project.welnessmind.ui.register.professional.ProfessionalViewModel
 import ifsp.project.welnessmind.util.SharedPreferencesUtil
 import kotlinx.coroutines.launch
 
@@ -24,5 +25,11 @@ class PatientHomeViewModel(
         } catch (e: Exception) {
             Log.e(TAG, "Erro ao buscar o nome do paciente.", e)
         }
+    }
+
+    fun getPatientID(context: Context): Long {
+        val userID = SharedPreferencesUtil.getUserId(context)
+        Log.d(TAG, "ID encontrado: $userID")
+        return userID
     }
 }

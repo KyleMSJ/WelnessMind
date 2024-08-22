@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import ifsp.project.welnessmind.data.db.entity.OfficeLocationEntity
 import ifsp.project.welnessmind.data.db.entity.ProfessionalEntity
 
 @Dao

@@ -27,9 +27,9 @@ import kotlinx.coroutines.internal.synchronized
     FormsEntity::class,
     PatientPassword::class,
     ProfessionalPassword::class,
-    OfficeLocationEntity::class], version = 8,
+    OfficeLocationEntity::class], version = 12,
     autoMigrations = [
-        AutoMigration (from = 7, to = 8, spec = AppDatabase.AutoMigration::class)
+        AutoMigration (from = 11, to = 12, spec = AppDatabase.AutoMigration::class)
     ])
 abstract class AppDatabase : RoomDatabase() {
     class AutoMigration : AutoMigrationSpec

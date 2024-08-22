@@ -15,6 +15,7 @@ import ifsp.project.welnessmind.R
 import ifsp.project.welnessmind.data.db.AppDatabase
 import ifsp.project.welnessmind.data.repository.SyncRepository
 import ifsp.project.welnessmind.databinding.FragmentHomeBinding
+import ifsp.project.welnessmind.util.SharedPreferencesUtil
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -24,8 +25,10 @@ class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModels {
         val professionalDao = AppDatabase.getInstance(requireContext()).professionalDao
         val patientDao = AppDatabase.getInstance(requireContext()).patientDao
+        val formsDao = AppDatabase.getInstance(requireContext()).formsDao
+        val officeLocationDao = AppDatabase.getInstance(requireContext()).officeLocationDao
         val firebaseDatabase = FirebaseDatabase.getInstance()
-        HomeViewModelFactory(SyncRepository(professionalDao, patientDao, firebaseDatabase))
+        HomeViewModelFactory(SyncRepository(patientDao, professionalDao, formsDao, officeLocationDao, firebaseDatabase))
     }
 
     override fun onCreateView(
@@ -46,6 +49,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        SharedPreferencesUtil.saveUserId(requireContext(), 1L)
         viewModel.syncData()
 
         binding.btnCadastro.setOnClickListener {
@@ -57,7 +61,7 @@ class HomeFragment : Fragment() {
             bundle.apply {
                 putString("userType", "PACIENTE")
             }
-            findNavController().navigate(R.id.action_homeFragment_to_loginFragment, bundle)
+            findNavController().navigate(R.id.action_homeFragment_to_conditionalLoginFragment, bundle)
         }
     }
 

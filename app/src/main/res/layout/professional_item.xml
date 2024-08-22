@@ -27,6 +27,7 @@
             android:textStyle="italic"
             tools:text="Caio Marcelo" />
 
+
         <TextView
             android:id="@+id/text_pro_especialidade"
             android:layout_width="wrap_content"

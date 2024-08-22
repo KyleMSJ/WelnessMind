@@ -15,8 +15,8 @@
             android:id="@+id/action_homeFragment_to_conditionalFragment"
             app:destination="@id/conditionalFragment"/>
         <action
-            android:id="@+id/action_homeFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_homeFragment_to_conditionalLoginFragment"
+            app:destination="@id/conditionalLoginFragment" />
 
     </fragment>
 
@@ -90,6 +90,9 @@
         <action
             android:id="@+id/action_loginFragment_to_officeRegisterFragment"
             app:destination="@id/officeRegisterFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_professionalProfileFragment"
+            app:destination="@id/professionalProfileFragment" />
     </fragment>
 
     <fragment
@@ -123,6 +126,9 @@
         <argument
             android:name="professional_id"
             app:argType="long" />
+        <action
+            android:id="@+id/action_officeRegisterFragment_to_professionalProfileFragment"
+            app:destination="@id/professionalProfileFragment" />
     </fragment>
     <fragment
         android:id="@+id/patientHomeFragment"
@@ -138,4 +144,9 @@
         android:name="ifsp.project.welnessmind.ui.register.patient.PatientProfileFragment"
         android:label="@string/user_home"
         xlmns:layout="@layout/fragment_patient_profile" />
+    <fragment
+        android:id="@+id/conditionalLoginFragment"
+        android:name="ifsp.project.welnessmind.ui.ConditionalLoginFragment"
+        android:label="@string/conditional_screen"
+        xlmns:layout="@layout/fragment_conditional_login"/>
 </navigation>

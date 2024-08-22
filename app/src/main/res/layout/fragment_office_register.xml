@@ -102,8 +102,8 @@
                 android:background="@drawable/ellipse"
                 android:elevation="4dp" />
 
-            <TextView
-                android:id="@+id/tv_descricao"
+            <EditText
+                android:id="@+id/et_descricao"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/office_description"
@@ -111,7 +111,8 @@
                 android:layout_alignEnd="@+id/office_description"
                 android:layout_alignBottom="@+id/office_description"
                 android:gravity="center"
-                android:text="@string/tv_office_description"
+                android:background="@color/white"
+                android:hint="@string/tv_office_description"
                 android:textAppearance="@style/info"
                 android:textSize="16sp" />
 
@@ -133,26 +134,18 @@
                 android:background="@drawable/ellipse2"
                 android:elevation="4dp" />
 
-            <TextView
-                android:id="@+id/tv_info_contato"
+            <EditText
+                android:id="@+id/et_info_contato"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:inputType="phone"
                 android:layout_below="@+id/office_description"
                 android:layout_marginStart="12dp"
+                android:background="@color/white"
                 android:layout_marginTop="19dp"
                 android:layout_toEndOf="@id/tv_contato"
-                android:text="@string/hint_contato"
-                android:textColor="#B3000000"
+                android:hint="@string/hint_contato"
                 android:textSize="11sp" />
-
-            <View
-                android:id="@+id/ic_edit"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_alignTop="@+id/tv_contato"
-                android:layout_gravity="start"
-                android:layout_marginTop="42dp"
-                android:background="@drawable/editar_icon" />
 
             <Button
                 android:id="@+id/btn_avancar"

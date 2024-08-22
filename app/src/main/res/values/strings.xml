@@ -2,6 +2,7 @@
     <!--    Main Activity & Manifest -->
     <string name="app_name">WelnessMind</string>
     <string name="app_header">Welness Mind</string>
+    <string name="app_logo">App Logo</string>
 
     <!--    Home Activity -->
     <string name="tela_inicial">Tela Inicial</string>
@@ -18,7 +19,12 @@
     <string name="btn_profissional">Registrar credenciais</string>
     <string name="decision_profissional">Para profissionais da saúde:</string>
 
+    <!--    Conditional Activity 2 -->
+    <string name="btn_profissional2">Entre aqui</string>
+
+
     <!--    Cadastro Usuário -->
+    <string name="registerPaciente">Cadastro Paciente</string>
     <string name="subscriber_Title">Cadastro de Usuário</string>
     <string name="registerUser">Usuário</string>
     <string name="nome">Nome Completo</string>
@@ -59,6 +65,7 @@
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Bem-vindo! "</string>
     <string name="invalid_username">Não é um usuário válido</string>
+    <string name="password_generation_failed">A geração de senha falhou</string>
     <string name="invalid_password">A senha deve ter mais de 8 caracteres</string>
     <string name="email_conflict_error">O email já está sendo utilizado por outro usuário.</string>
     <string name="login_failed">Login falhou</string>
@@ -90,24 +97,23 @@
 
     <!-- Lista de Profissionais  -->
     <string name="professionals_list">Lista de Profissionais</string>
-    <string name="password_generation_failed">A geração de senha falhou</string>
+
+    <!--    Registro do consultório e perfil do profissional -->
     <string name="marcar_consulta">Marcar Consulta</string>
     <string name="info_home">Clique na casa ao lado\npara ver os seus \nindicadores de saúde</string>
-    <string name="registerPaciente">Cadastro Paciente</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="info_register_office">Clique no mapa ou digite no campo abaixo para selecionar a localização do consultório</string>
     <string name="office_note">Aqui você pode cadastrar o \nconsultório no qual trabalha,\ncolocar uma descrição, e\nregistrar informações para \ncontato</string>
     <string name="tv_office_description">descrição</string>
     <string name="tv_contato">Contato:</string>
     <string name="hint_contato">*Essa informação será exibida aos pacientes</string>
-    <string name="app_logo">App Logo</string>
     <string name="office_register">Registro de consultório</string>
     <string name="location_saved_successfully">Localização salva com sucesso</string>
     <string name="location_error_to_save">Ocorreu um erro ao salvar a localização</string>
     <string name="location_error_to_fetch">Ocorreu um erro ao buscar o endereço</string>
     <string name="hint_insert_address">Insira o endereço</string>
     <string name="professionalProfile">Perfil do Profissional</string>
+
+<!--    Home do usuário -->
     <string name="nav_consultas">Consultas</string>
     <string name="nav_forms">Formulário</string>
     <string name="nav_profile">Perfil</string>

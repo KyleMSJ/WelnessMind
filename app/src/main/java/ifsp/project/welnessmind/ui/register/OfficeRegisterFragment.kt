@@ -2,16 +2,19 @@ package ifsp.project.welnessmind.ui.register
 
 import android.location.Geocoder
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -21,10 +24,14 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.firebase.database.FirebaseDatabase
 import ifsp.project.welnessmind.R
 import ifsp.project.welnessmind.data.db.AppDatabase
+import ifsp.project.welnessmind.data.db.dao.FormsDAO
 import ifsp.project.welnessmind.data.db.dao.OfficeLocationDAO
 import ifsp.project.welnessmind.data.db.dao.ProfessionalDAO
+import ifsp.project.welnessmind.data.repository.OfficeRepository
 import ifsp.project.welnessmind.data.repository.ProfessionalRepository
+import ifsp.project.welnessmind.data.repository.SyncRepository
 import ifsp.project.welnessmind.databinding.FragmentOfficeRegisterBinding
+import ifsp.project.welnessmind.domain.OfficeUseCase
 import ifsp.project.welnessmind.domain.ProfessionalUseCase
 import ifsp.project.welnessmind.ui.register.professional.ProfessionalViewModel
 import java.util.Locale
@@ -38,6 +45,8 @@ class OfficeRegisterFragment : Fragment() {
     private lateinit var tvSelectedLocation: TextView
     private lateinit var etAddress: EditText
     private lateinit var btnSaveLocation: Button
+    private lateinit var etDescricao: EditText
+    private lateinit var etContato: EditText
     private var selectedLatLng: LatLng? = null
 
     private val viewModel: ProfessionalViewModel by viewModels {
@@ -48,9 +57,12 @@ class OfficeRegisterFragment : Fragment() {
                 val officeLocationDAO: OfficeLocationDAO =
                     AppDatabase.getInstance(requireContext()).officeLocationDao
                 val firebaseDatabase = FirebaseDatabase.getInstance()
+                val formsDao: FormsDAO = AppDatabase.getInstance(requireContext()).formsDao
                 val repository: ProfessionalRepository =
                     ProfessionalUseCase(professionalDAO, officeLocationDAO, firebaseDatabase)
-                return ProfessionalViewModel(repository) as T
+                val officeRepository: OfficeRepository = OfficeUseCase(officeLocationDAO, firebaseDatabase)
+                val syncRepository = SyncRepository(null, professionalDAO, formsDao, officeLocationDAO, firebaseDatabase)
+                return ProfessionalViewModel(repository, officeRepository, syncRepository) as T
             }
         }
     }
@@ -91,11 +103,18 @@ class OfficeRegisterFragment : Fragment() {
         tvSelectedLocation = binding.tvSelectedLocation
         etAddress = binding.etAddress
         btnSaveLocation = binding.btnAvancar
+        etDescricao = binding.etDescricao
+        etContato = binding.etInfoContato
 
         val professionalId = arguments?.getLong("professional_id") ?: -1L
+        Log.d("OfficeRegisterFragment", "ID do profissional: $professionalId")
 
         btnSaveLocation.setOnClickListener {
             val address = etAddress.text.toString()
+            val description = etDescricao.text.toString()
+            val contact = etContato.text.toString()
+
+            Log.d("OfficeRegisterFragment", "Endereço: $address, Descrição: $description, Contato: $contact")
             if (address.isNotEmpty()) {
                 val geocoder = Geocoder(requireContext(), Locale.getDefault())
                 val addresses = geocoder.getFromLocationName(address, 1)
@@ -104,7 +123,6 @@ class OfficeRegisterFragment : Fragment() {
                     if (addresses.isNotEmpty()) {
                         val location = addresses[0]
                         selectedLatLng = LatLng(location.latitude, location.longitude)
-
 
                         googleMap.clear()
                         googleMap.addMarker(
@@ -119,7 +137,15 @@ class OfficeRegisterFragment : Fragment() {
                         )
                         "Localização: ${location.latitude}, ${location.longitude}".also { tvSelectedLocation.text = it }
 
-                        viewModel.saveOfficeLocation(professionalId, address, location.latitude, location.longitude)
+                        Log.d("OfficeRegisterFragment", "Salvando: Endereço: $address, Descrição: $description, Contato: $contact")
+                        viewModel.saveOfficeLocation(professionalId, address, location.latitude, location.longitude, description, contact)
+
+                        val bundle = Bundle()
+                        bundle.apply {
+                            putBoolean("isProfessionalMode", true)
+                            putLong("professional_id", professionalId)
+                        }
+                        findNavController().navigate(R.id.action_officeRegisterFragment_to_professionalProfileFragment, bundle)
                     }
                 }
             }
